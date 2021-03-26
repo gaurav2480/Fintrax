@@ -1,0 +1,57 @@
+﻿.navbar {
+            -webkit-box-shadow: 2px -2px 7px -1px rgba(110,104,110,1);
+            -moz-box-shadow: 2px -2px 7px -1px rgba(110,104,110,1);
+            box-shadow: 2px -2px 7px -1px rgba(110,104,110,1);
+            text-align:center;
+        }
+
+
+        #hell{
+            text-align:center;
+
+
+            font-family:'Franklin Gothic';
+        }
+         #helll{
+             margin-top:20px;
+          
+        }
+        
+
+
+        #move {
+            margin-top: 170px;
+           
+
+         
+         
+    
+            
+        }
+
+        #user{
+            margin-top:20px;
+         
+        }
+        #pass{
+            margin-top:20px;
+        }
+
+        #img{
+          
+             text-align:right;
+         
+            margin-top:190px;
+
+          
+        }
+        
+       .h4, h4{
+        margin-left:900px;
+
+       }
+       #bottom {
+           min-height:30px;
+       }
+
+        
