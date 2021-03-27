@@ -222,7 +222,7 @@
 
                                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " id="head">
                                               <br />
-                                              <h3 class="text-center">SALES VOUCHER CREATION IN TALLY</h3>
+                                              <h3 class="text-center">UNIDENTIFIED RECEIPT CREATION IN TALLY</h3>
                                           </div>
                                       </div>
                                   </div>

@@ -24,7 +24,7 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
     protected void Page_Load(object sender, EventArgs e)
     {
 
-     
+
 
 
     }
@@ -33,71 +33,69 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
 
    
 
-
-
     protected void Button2_Click(object sender, EventArgs e)
     {
 
         string bankName = Request.Form["bank"];
 
-        try { 
-        string filePath = string.Empty;
-        if (FileUpload1.PostedFile != null)
-        {
-            string path = Server.MapPath("~/Uploads/");
-            if (!Directory.Exists(path))
+        try {
+            string filePath = string.Empty;
+            if (FileUpload1.PostedFile != null)
             {
-                Directory.CreateDirectory(path);
-            }
-
-            filePath = path + Path.GetFileName(FileUpload1.FileName);
-            string extension = Path.GetExtension(FileUpload1.FileName);
-            FileUpload1.SaveAs(filePath);
-
-            string conString = string.Empty;
-            switch (extension)
-            {
-                case ".xls": //Excel 97-03.
-                    conString = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
-                    break;
-                case ".xlsx": //Excel 07 and above.
-                    conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
-                    break;
-            }
-
-            DataTable dt = new DataTable();
-            conString = string.Format(conString, filePath);
-
-            using (OleDbConnection connExcel = new OleDbConnection(conString))
-            {
-                using (OleDbCommand cmdExcel = new OleDbCommand())
+                string path = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(path))
                 {
-                    using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                    Directory.CreateDirectory(path);
+                }
+
+                filePath = path + Path.GetFileName(FileUpload1.FileName);
+                string extension = Path.GetExtension(FileUpload1.FileName);
+                FileUpload1.SaveAs(filePath);
+
+                string conString = string.Empty;
+                switch (extension)
+                {
+                    case ".xls": //Excel 97-03.
+                        conString = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
+                        break;
+                    case ".xlsx": //Excel 07 and above.
+                        conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
+                        break;
+                }
+
+                DataTable dt = new DataTable();
+                conString = string.Format(conString, filePath);
+
+                using (OleDbConnection connExcel = new OleDbConnection(conString))
+                {
+                    using (OleDbCommand cmdExcel = new OleDbCommand())
                     {
-                        cmdExcel.Connection = connExcel;
+                        using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                        {
+                            cmdExcel.Connection = connExcel;
 
-                        //Get the name of First Sheet.
-                        connExcel.Open();
-                        DataTable dtExcelSchema;
-                        dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                        string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                        connExcel.Close();
+                            //Get the name of First Sheet.
+                            connExcel.Open();
+                            DataTable dtExcelSchema;
+                            dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                            string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                            connExcel.Close();
 
-                        //Read Data from First Sheet.
-                        connExcel.Open();
-                        cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
-                        odaExcel.SelectCommand = cmdExcel;
-                        odaExcel.Fill(dt);
-                        connExcel.Close();
+                            //Read Data from First Sheet.
+                            connExcel.Open();
+                            cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                            odaExcel.SelectCommand = cmdExcel;
+                            odaExcel.Fill(dt);
+                            connExcel.Close();
+                        }
                     }
                 }
-            }
+                string result = "";
 
-          
-            string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-            foreach (DataRow row in dt.Rows)
-            {
-                    string result = "";
+                string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+                foreach (DataRow row in dt.Rows)
+                {
+
 
                     string narration = row["Description"].ToString();
                     DateTime valueDate = Convert.ToDateTime(row["Value Date"].ToString());
@@ -105,7 +103,7 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
 
 
 
-                   int dayInt = valueDate.Day;
+                    int dayInt = valueDate.Day;
                     string day = valueDate.Day.ToString();
                     if (dayInt < 10)
                     {
@@ -139,10 +137,10 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                     xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Receipt" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
                     xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
 
-                    xmlstc1 = xmlstc1 + "<NARRATION>" + narration +"</NARRATION>\r\n";
+                    xmlstc1 = xmlstc1 + "<NARRATION>" + narration + "</NARRATION>\r\n";
                     xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + bankName + "</PARTYLEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Receipt" + "</VOUCHERTYPENAME>\r\n";
-                   // xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
+                    // xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
                     xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
                     xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Accounting Voucher View" + "</PERSISTEDVIEW>\r\n";
@@ -227,11 +225,16 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                        reader.Close();
                        sqlcon.Close();*/
 
+                    result += result + "/n";
+
                 }
 
-              
-          
-        }
+
+
+
+
+            }
+
 
 
             Label5.Text = "Updated Successfully!!!";
