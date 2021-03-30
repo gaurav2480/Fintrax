@@ -109,8 +109,10 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                     }else
                     {
                         string dateData = value.Replace('-', '/');
+                            drcr = drcr.Replace(',', ' ');
+                            drcr = drcr.Replace('&', ' ');
 
-                        DateTime data = DateTime.ParseExact(dateData, "MM/dd/yyyy", null);
+                     DateTime data = DateTime.ParseExact(dateData, "MM/dd/yyyy", null);
                         double date = data.ToOADate();
                         SqlConnection sqlcon = new SqlConnection(conn);
                         sqlcon.Open();

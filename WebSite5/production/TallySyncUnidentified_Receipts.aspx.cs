@@ -13,6 +13,7 @@ using System.IO;
 using System.Net;
 using System.Globalization;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
 
 public partial class WebSite5_production_TallySyncUnidentified_Receipts : System.Web.UI.Page
 {
@@ -24,15 +25,8 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
     protected void Page_Load(object sender, EventArgs e)
     {
 
-
-
-
     }
-
-
-
-   
-
+    
     protected void Button2_Click(object sender, EventArgs e)
     {
 
@@ -100,6 +94,8 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                     string narration = row["Description"].ToString();
                     DateTime valueDate = Convert.ToDateTime(row["Value Date"].ToString());
                     double amount = (double)row["Transaction Amount(INR)"];
+
+                    narration = Regex.Replace(narration, @"[^0-9a-zA-Z]+", " ");
 
 
 
@@ -187,7 +183,7 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9031");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -204,35 +200,12 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
 
                     i++;
 
-                    /*   SqlConnection sqlcon = new SqlConnection(conn);
-                       sqlcon.Open();
-
-                       string selectQuery = "select * from TallySyncAcc_Mrktg_Pay where Receipt_No='" + row["Receipt No"] + "'";
-                       SqlCommand cmd1 = new SqlCommand(selectQuery, sqlcon);
-                       SqlDataReader reader = cmd1.ExecuteReader();
-                       if (reader.HasRows)
-                       {
-
-                       }else
-                       {
-                           string InsertQuery = "Insert into TallySyncAcc_Mrktg_Pay values('" + row["Receipt No"] + "','" + row["Transmittal Date"].ToString() + "','" + row["Booking ID"].ToString() + "','" + row["Client Name"].ToString() + "','" + row["Booking Fees"] + "','" + row["CGST"] + "','" + row["SGST"] + "','" + row["Surcharge"] + "','" + row["Resort Credit"] + "','" + row["Total"] + "','" + row["Payment Method"].ToString() + "','" + row["Transaction Date"].ToString() + "','" + row["Transaction Id"].ToString() + "','" + row["Booking Prscd As"].ToString() + "','" + row["Resort"].ToString() + "','" + row["Check In Date"].ToString() + "','" + row["Check Out Date"].ToString() + "','Active')";
-                           SqlCommand cmd = new SqlCommand(InsertQuery, sqlcon);
-                           cmd.ExecuteNonQuery();
-
-
-                       }
-
-                       reader.Close();
-                       sqlcon.Close();*/
-
+                   
                     result += result + "/n";
 
                 }
 
-
-
-
-
+                
             }
 
 

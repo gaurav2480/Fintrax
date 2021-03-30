@@ -123,7 +123,7 @@
 
                           <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="TallySyncMrktg_Pay.aspx">Sync Marktg Sales Voucher</a></li>
+                                  <li><a href="TallySyncUnidentified_Receipts.aspx">Sync Unidentified Receipts</a></li>
                                  
                               </ul>
                           </li>
@@ -400,60 +400,7 @@
     </script>
     
   
-      <script>
 
-        $(document).ready(function () {
-
-         
-
-                $.ajax({
-
-                    type: 'Post',
-                    url: 'TallySyncMrktg_Pay.aspx/data',
-                    contentType: "application/json; charset=utf-8",
-                    data: "{}",
-                    async: false,
-                    success: function (data) {
-                      
-                        $("#Venue").empty();
-                        $("#Venue").append("<option disabled selected value>Select an Option</option>");
-                        subJson = JSON.parse(data.d);
-
-                        $.each(subJson, function (key, value) {
-
-                            $.each(value, function (index1, value1) {
-                                
-                                if (value1[0] == "") {
-                                   
-                                } else {
-                                   
-                                  
-                                    $("#Venue").append("<option value='"+value1[0]+"'>"+value1[0]+"</option>");
-                                }
-                            });
-
-                        });
-
-                       
-                    },
-                    error: function (xhr, status, error) {
-                        var err = JSON.parse(xhr.responseText);
-                        alert(err.Message);
-                    }
-
-                });
-                return false;
-
-
-            });
-
-
-          
-
-
-
-
-    </script>
        
 </body>
 </html>
