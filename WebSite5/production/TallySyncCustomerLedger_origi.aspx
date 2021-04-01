@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TallySyncCustomerLedger.aspx.cs" Inherits="WebSite5_production_TallySyncCustomerLedger" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TallySyncCustomerLedger_origi.aspx.cs" Inherits="WebSite5_production_TallySyncCustomerLedger_origi" %>
 
 <!DOCTYPE html>
 
@@ -20,7 +20,7 @@
     <style>
 
           #sidebar-menu{
-        
+         position: fixed;
          width: 230px;
          margin-top:70px;
         }
@@ -139,7 +139,6 @@
 <li><a href="RollOver.aspx">Roll Over</a></li>
 <li><a href="ProjectedInterestDetailsHisto.aspx">Historical EMI View</a></li>
 <li><a href="BulkReceiptTotal.aspx">Bulk Receipt Total</a></li>
-<li><a href="UploadBankStatement.aspx">Upload Other Receipts</a></li>
                               </ul>
                           </li>
                           <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>

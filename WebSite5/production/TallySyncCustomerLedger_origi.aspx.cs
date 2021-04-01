@@ -12,7 +12,7 @@ using ClosedXML.Excel;
 using System.IO;
 using System.Net;
 
-public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI.Page
+public partial class WebSite5_production_TallySyncCustomerLedger_origi : System.Web.UI.Page
 {
 
 
@@ -42,7 +42,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-               // string xmlstc1 = "";
+                string xmlstc1 = "";
                 string LedgerGroup = "";
                 string LOANNO = reader.GetString(0);
                 string name = reader.GetString(1);
@@ -68,24 +68,21 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                         LedgerGroup = "FY-2020-21-10%Deposit 3 Months Int Waiver";
                     }
 
-                    string xmlstc1 = "<ENVELOPE>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</HEADER>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<BODY>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<IMPORTDATA>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<REPORTNAME>All Masters</REPORTNAME>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Parshuram Finance Pvt. Ltd.</SVCURRENTCOMPANY>" + "\r\n";
-                    //    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Parshuram Finance Pvt. Ltd.</SVCURRENTCOMPANY>" + "\r\n"; 
-                    xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
+                    xmlstc1 = "<ENVELOPE>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "</HEADER>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<BODY>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<IMPORTDATA>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<REPORTNAME>ALL Masters</REPORTNAME>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
                     xmlstc1 = xmlstc1 + "<GROUP NAME=" + "\"" + LedgerGroup + "\" Action =" + "\"" + "Create" + "\">\r\n";
                     xmlstc1 = xmlstc1 + "<NAME.LIST TYPE = 'String'>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<NAME>" + LedgerGroup + "</NAME>\r\n";
+                    // xmlstc1 = xmlstc1 + "<NAME>" + LoanNo + "</NAME>\r\n";
                     xmlstc1 = xmlstc1 + "</NAME.LIST>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<PARENT>" + "Loan Contracts Sanctioned" + "</PARENT>\r\n";
                     xmlstc1 = xmlstc1 + "</GROUP>\r\n";
@@ -95,24 +92,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
-                    httpWebRequest1.Method = "POST";
-                    httpWebRequest1.ContentLength = xmlstc1.Length;
-                    httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
-                    StreamWriter streamWriter1 = new StreamWriter(httpWebRequest1.GetRequestStream());
-                    streamWriter1.Write(xmlstc1);
-                    streamWriter1.Close();
-
-                    HttpWebResponse objResponse1 = (HttpWebResponse)httpWebRequest1.GetResponse();
-                    using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
-                    {
-                        result1 = sr1.ReadToEnd();
-                        sr1.Close();
-                    }
-                    Label2.Text = result1;
-
-
-
+                
 
                 }
                 else if (loanMonth >= 4 && loanYear == 2021 || loanMonth <= 3 && loanYear == 2022)
@@ -126,24 +106,21 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                         LedgerGroup = "FY-2021-22-10%Deposit 3 Months Int Waiver";
                     }
 
-                    string xmlstc1 = "<ENVELOPE>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</HEADER>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<BODY>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<IMPORTDATA>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<REPORTNAME>All Masters</REPORTNAME>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Parshuram Finance Pvt. Ltd.</SVCURRENTCOMPANY>" + "\r\n";
-                    // xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Parshuram Finance Pvt. Ltd.</SVCURRENTCOMPANY>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
+                    xmlstc1 = "<ENVELOPE>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "</HEADER>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<BODY>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<IMPORTDATA>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<REPORTNAME>ALL Masters</REPORTNAME>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
                     xmlstc1 = xmlstc1 + "<GROUP NAME=" + "\"" + LedgerGroup + "\" Action =" + "\"" + "Create" + "\">\r\n";
                     xmlstc1 = xmlstc1 + "<NAME.LIST TYPE = 'String'>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<NAME>" + LedgerGroup + "</NAME>\r\n";
+                    // xmlstc1 = xmlstc1 + "<NAME>" + LoanNo + "</NAME>\r\n";
                     xmlstc1 = xmlstc1 + "</NAME.LIST>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<PARENT>" + "Loan Contracts Sanctioned" + "</PARENT>\r\n";
                     xmlstc1 = xmlstc1 + "</GROUP>\r\n";
@@ -153,43 +130,92 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
-                    httpWebRequest1.Method = "POST";
-                    httpWebRequest1.ContentLength = xmlstc1.Length;
-                    httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
-                    StreamWriter streamWriter1 = new StreamWriter(httpWebRequest1.GetRequestStream());
-                    streamWriter1.Write(xmlstc1);
-                    streamWriter1.Close();
-
-                    HttpWebResponse objResponse1 = (HttpWebResponse)httpWebRequest1.GetResponse();
-                    using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
-                    {
-                        result1 = sr1.ReadToEnd();
-                        sr1.Close();
-                    }
-                    Label2.Text = result1;
 
                 }
 
-          
+                HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                httpWebRequest1.Method = "POST";
+                httpWebRequest1.ContentLength = xmlstc1.Length;
+                httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
+                StreamWriter streamWriter1 = new StreamWriter(httpWebRequest1.GetRequestStream());
+                streamWriter1.Write(xmlstc1);
+                streamWriter1.Close();
+
+                HttpWebResponse objResponse1 = (HttpWebResponse)httpWebRequest1.GetResponse();
+                using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
+                {
+                    result1 = sr1.ReadToEnd();
+                    sr1.Close();
+                }
 
 
 
-                        string xmlstc = "<ENVELOPE>" + "\r\n";
-                        xmlstc = xmlstc + "<HEADER>" + "\r\n";
-                        xmlstc = xmlstc + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
-                        xmlstc = xmlstc + "</HEADER>" + "\r\n";
-                        xmlstc = xmlstc + "<BODY>" + "\r\n";
-                        xmlstc = xmlstc + "<IMPORTDATA>" + "\r\n";
-                        xmlstc = xmlstc + "<REQUESTDESC>" + "\r\n";
-                        xmlstc = xmlstc + "<REPORTNAME>All Masters</REPORTNAME>" + "\r\n";
-                        xmlstc = xmlstc + "<STATICVARIABLES>" + "\r\n";
-                     xmlstc = xmlstc + "<SVCURRENTCOMPANY>Parshuram Finance Pvt. Ltd.</SVCURRENTCOMPANY>" + "\r\n";
-             //   xmlstc = xmlstc + "<SVCURRENTCOMPANY>Parshuram Finance Pvt. Ltd.</SVCURRENTCOMPANY>" + "\r\n";
-                        xmlstc = xmlstc + "</STATICVARIABLES>" + "\r\n";
-                        xmlstc = xmlstc + "</REQUESTDESC>" + "\r\n";
+                //  string strGRNDate = "2/02/2014";
+                //  string strVoucherNo = "3";
+                //  string strGRNNo = "2";
+                //   string strSupplierName = "Abhinav Sharma";
+                //  string strPurchaseOrder = "2";
+                //   string strGRN = "1";
+                //   string strGRNValueNtv = "2";
+
+
+                string xmlstc = "<ENVELOPE>" + "\r\n";
+                xmlstc = xmlstc + "<HEADER>" + "\r\n";
+                xmlstc = xmlstc + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
+                xmlstc = xmlstc + "</HEADER>" + "\r\n";
+                xmlstc = xmlstc + "<BODY>" + "\r\n";
+                xmlstc = xmlstc + "<IMPORTDATA>" + "\r\n";
+                xmlstc = xmlstc + "<REQUESTDESC>" + "\r\n";
+                xmlstc = xmlstc + "<REPORTNAME>ALL Masters</REPORTNAME>" + "\r\n";
+                xmlstc = xmlstc + "<STATICVARIABLES>" + "\r\n";
+                xmlstc = xmlstc + "<SVCURRENTCOMPANY>Parshuram Finance Pvt. Ltd.</SVCURRENTCOMPANY>" + "\r\n";
+                xmlstc = xmlstc + "</STATICVARIABLES>" + "\r\n";
+                xmlstc = xmlstc + "</REQUESTDESC>" + "\r\n";
                 xmlstc = xmlstc + "<REQUESTDATA>" + "\r\n";
                 xmlstc = xmlstc + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
+                //  xmlstc = xmlstc + "<VOUCHER VCHTYPE=" + "\"" + "Purchase" + "\" >" + "\r\n";
+                //     xmlstc = xmlstc + "<DATE>" + strGRNDate + "</DATE>" + "\r\n";
+                //    xmlstc = xmlstc + "<VOUCHERTYPENAME>Purchase</VOUCHERTYPENAME>" + "\r\n";
+                //   xmlstc = xmlstc + "<VOUCHERNUMBER>" + strVoucherNo + "</VOUCHERNUMBER>" + "\r\n";
+                //   xmlstc = xmlstc + "<REFERENCE>" + strGRNNo + "</REFERENCE>" + "\r\n";
+                /* xmlstc = xmlstc + "<PARTYLEDGERNAME>" + strSupplierName + "</PARTYLEDGERNAME>" + "\r\n";
+                 xmlstc = xmlstc + "<PARTYNAME>" + strSupplierName + "</PARTYNAME>" + "\r\n";
+                 xmlstc = xmlstc + "<EFFECTIVEDATE>" + strGRNDate + "</EFFECTIVEDATE>" + "\r\n";
+                 xmlstc = xmlstc + "<ISINVOICE>Yes</ISINVOICE>" + "\r\n";
+                 xmlstc = xmlstc + "<INVOICEORDERLIST.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "<BASICORDERDATE>" + strGRNDate + "</BASICORDERDATE>" + "\r\n";
+                 xmlstc = xmlstc + "<BASICPURCHASEORDERNO>" + strPurchaseOrder + "</BASICPURCHASEORDERNO>" + "\r\n";
+                 xmlstc = xmlstc + "</INVOICEORDERLIST.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "<ALLLEDGERENTRIES.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "<LEDGERNAME>" + strSupplierName + "</LEDGERNAME>" + "\r\n";
+                 xmlstc = xmlstc + "<GSTCLASS/>" + "\r\n";
+                 xmlstc = xmlstc + "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>" + "\r\n";
+                 xmlstc = xmlstc + "<LEDGERFROMITEM>No</LEDGERFROMITEM>" + "\r\n";
+                 xmlstc = xmlstc + "<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>" + "\r\n";
+                 xmlstc = xmlstc + "<ISPARTYLEDGER>Yes</ISPARTYLEDGER>" + "\r\n";
+                 xmlstc = xmlstc + "<AMOUNT>" + strGRN + "</AMOUNT>" + "\r\n";
+                 xmlstc = xmlstc + "<BILLALLOCATIONS.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "<NAME>" + strGRNNo + "</NAME>" + "\r\n";
+                 xmlstc = xmlstc + "<BILLCREDITPERIOD>30 Days</BILLCREDITPERIOD>" + "\r\n";
+                 xmlstc = xmlstc + "<BILLTYPE>New Ref</BILLTYPE>" + "\r\n";
+                 xmlstc = xmlstc + "<AMOUNT>" + strGRN + "</AMOUNT>" + "\r\n";
+                 xmlstc = xmlstc + "</BILLALLOCATIONS.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "</ALLLEDGERENTRIES.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "<ALLLEDGERENTRIES.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "<LEDGERNAME>Abhinav Sharma</LEDGERNAME>" + "\r\n";
+                 xmlstc = xmlstc + "<GSTCLASS/>" + "\r\n";
+                 xmlstc = xmlstc + "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>" + "\r\n";
+                 xmlstc = xmlstc + "<LEDGERFROMITEM>No</LEDGERFROMITEM>" + "\r\n";
+                 xmlstc = xmlstc + "<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>" + "\r\n";
+                 xmlstc = xmlstc + "<ISPARTYLEDGER>No</ISPARTYLEDGER>" + "\r\n";
+                 xmlstc = xmlstc + "<AMOUNT>" + strGRNValueNtv + "</AMOUNT>" + "\r\n";
+                 xmlstc = xmlstc + "</ALLLEDGERENTRIES.LIST>" + "\r\n";
+                 xmlstc = xmlstc + "</VOUCHER>" + "\r\n";
+                 xmlstc = xmlstc + "</TALLYMESSAGE>" + "\r\n";
+                 xmlstc = xmlstc + "</REQUESTDATA>" + "\r\n";
+                 xmlstc = xmlstc + "</IMPORTDATA>" + "\r\n";
+                 xmlstc = xmlstc + "</BODY>" + "\r\n";
+                 xmlstc = xmlstc + "</ENVELOPE>" + "\r\n";*/
                 xmlstc = xmlstc + "<LEDGER NAME=" + "\"" + name + "\" Action =" + "\"" + "Create" + "\">\r\n";
                 xmlstc = xmlstc + "<NAME.LIST TYPE = 'String'>" + "\r\n";
                 xmlstc = xmlstc + "<NAME>" + name + "</NAME>\r\n";
@@ -208,6 +234,8 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                 xmlstc = xmlstc + "</ADDRESS.LIST>" + "\r\n";
                 xmlstc = xmlstc + "<INCOMETAXNUMBER>" + pan + "</INCOMETAXNUMBER>\r\n";
                 xmlstc = xmlstc + "<PARENT>" + LedgerGroup + "</PARENT>\r\n";
+                //  xmlstc = xmlstc + "<OPENINGBALANCE>" + "100000.00"+ "</OPENINGBALANCE>\r\n";
+                // xmlstc = xmlstc + "<ISBILLWISEON>Yes</ISBILLWISEON>\r\n";
                 xmlstc = xmlstc + "</LEDGER>\r\n";
                 xmlstc = xmlstc + "</TALLYMESSAGE>\r\n";
                 xmlstc = xmlstc + "</REQUESTDATA>\r\n";
@@ -215,7 +243,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                 xmlstc = xmlstc + "</BODY>";
                 xmlstc = xmlstc + "</ENVELOPE>";
 
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                 httpWebRequest.Method = "POST";
                 httpWebRequest.ContentLength = xmlstc.Length;
                 httpWebRequest.ContentType = "application/x-www-form-urlencoded";
@@ -230,7 +258,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     sr.Close();
                 }
             }
-            Label2.Text = result;
+            Label2.Text = "Updated Successfully!!!";
             Response.AppendHeader("Refresh", "04;url=TallySyncCustomerLedger.aspx");
 
         }
