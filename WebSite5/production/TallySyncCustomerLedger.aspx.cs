@@ -95,7 +95,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -153,7 +153,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -215,7 +215,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                 xmlstc = xmlstc + "</BODY>";
                 xmlstc = xmlstc + "</ENVELOPE>";
 
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                 httpWebRequest.Method = "POST";
                 httpWebRequest.ContentLength = xmlstc.Length;
                 httpWebRequest.ContentType = "application/x-www-form-urlencoded";

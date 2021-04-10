@@ -200,7 +200,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -336,7 +336,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -429,7 +429,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -565,7 +565,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -660,7 +660,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -796,7 +796,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -886,7 +886,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -1022,7 +1022,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9090");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -1146,7 +1146,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
 
                 }else
                 {
-                    string InsertQuery = "Insert into TallySyncAcc_Mrktg_Pay values('" + row["Receipt No"] + "','" + row["Transmittal Date"].ToString() + "','" + row["Booking ID"].ToString() + "','" + row["Client Name"].ToString() + "','" + row["Booking Fees"] + "','" + row["CGST"] + "','" + row["SGST"] + "','" + row["Surcharge"] + "','" + row["Resort Credit"] + "','" + row["Total"] + "','" + row["Payment Method"].ToString() + "','" + row["Transaction Date"].ToString() + "','" + row["Transaction Id"].ToString() + "','" + row["Booking Prscd As"].ToString() + "','" + row["Resort"].ToString() + "','" + row["Check In Date"].ToString() + "','" + row["Check Out Date"].ToString() + "','Active')";
+                    string InsertQuery = "Insert into TallySyncAcc_Mrktg_Pay values('" + row["Receipt No"] + "','" + row["Transmittal Date"].ToString() + "','" + row["Booking ID"].ToString() + "','" + row["Client Name"].ToString() + "','" + row["Booking Fees"] + "','" + row["CGST"] + "','" + row["SGST"] + "','" + row["Surcharge on CC"] + "','" + row["Resort Credit"] + "','" + row["Total"] + "','" + row["Payment Method"].ToString() + "','" + row["Transaction Date"].ToString() + "','" + row["Transaction Id"].ToString() + "','" + row["Booking Prscd As"].ToString() + "','" + row["Resort"].ToString() + "','" + row["Check In Date"].ToString() + "','" + row["Check Out Date"].ToString() + "','Active')";
                     SqlCommand cmd = new SqlCommand(InsertQuery, sqlcon);
                     cmd.ExecuteNonQuery();
 

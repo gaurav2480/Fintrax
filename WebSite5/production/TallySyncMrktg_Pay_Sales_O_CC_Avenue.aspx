@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TallySync_Transactions.aspx.cs" Inherits="WebSite5_production_TallySync_Transactions" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TallySyncMrktg_Pay_Sales_O_CC_Avenue.aspx.cs" Inherits="WebSite5_production_TallySyncMrktg_Pay_Sales_O_CC_Avenue" %>
 
 <!DOCTYPE html>
 
@@ -120,31 +120,12 @@
                             <h3>MENU</h3>
                           <ul class="nav side-menu">
 
-<li><a><i class='fa fa-home'></i>Reports<span class='fa fa-chevron-down'></span> </a>
-                              <ul class='nav child_menu'>
-                                       <li><a href="AdvanceEmi.aspx">Advance Emi</a></li>
-                                  <li><a href="LastRowPaidOfClosedLoans.aspx">Additional Capital</a></li>
-                                  <li><a href="Overdue_Historical.aspx">Overdue Historical</a></li>
-                                  <li><a href="Interest_Waiver.aspx">Interest Loss - Waiver</a></li>
-				  <li><a href="ProjectedInterestDetails.aspx">Projected Interest Details</a></li>
-                                  <li><a href="Loan_Debtors.aspx">Loan Debtors</a></li>
-                                 <li><a href="Cancelled_Loans.aspx">Interest Loss - Cancelled</a></li>
-<li><a href="loanDueForDis.aspx">Loan Due For Disbursement</a></li>
-<li><a href="CollectionForMonth.aspx">Collection For Month</a></li>
- <li><a href="CollectionBeforeDib.aspx">Collection Before Disbursement</a></li>
-<li><a href="LoanSanctionRegister.aspx">Loan Sanction Register</a></li>
- <li><a href="Pre_Disbused_Emi_Collection.aspx">Pre Disbursement EMI Collection</a></li>
-<li><a href="Realisation_Status.aspx">Realisation Status</a></li>
-<li><a href="Closed_Loans.aspx">Interest Loss - Forclosure</a></li>
-<li><a href="RollOver.aspx">Roll Over</a></li>
-<li><a href="ProjectedInterestDetailsHisto.aspx">Historical EMI View</a></li>
-<li><a href="BulkReceiptTotal.aspx">Bulk Receipt Total</a></li>
-                              </ul>
-                          </li>
+
                           <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
-                                 
+                                  <li><a href="TallySyncMrktg_Pay.aspx">Sync Transmittal Sales Voucher</a></li>
+                                  <li><a href="TallySyncMrktg_Pay.aspx">Sync Call Center Sales Voucher</a></li>
+                                   <li><a href="TallySyncMrktg_Pay_Sales_O_CC_Avenue.aspx">Sync Call Center Sales Voucher CC Avenue</a></li>
                               </ul>
                           </li>
 
@@ -242,7 +223,7 @@
 
                                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " id="head">
                                               <br />
-                                              <h3 class="text-center">SYNC LEDGER REGISTER TO TALLY</h3>
+                                              <h3 class="text-center">SALES VOUCHER CREATION IN TALLY</h3>
                                           </div>
                                       </div>
                                   </div>
@@ -251,56 +232,77 @@
 
                                       <div>
 
-                                               <div class="row">
-                                          <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3" id="">
-                                              <label for="sel1">Date:</label>
-                                              <div class="input-group date" id="datepicker1" data-provide="datepicker">
-                                                  <asp:TextBox ID="fromDate" class="form-control pull-right" runat="server"></asp:TextBox>
-                                                  <div class="input-group-addon">
-                                                      <span class="glyphicon glyphicon-th"></span>
-                                                  </div>
+
+                                          <div class="row">
+                                              <div class="col-md-3">
+                                              <div class="form-group">
+                                                  <asp:FileUpload ID="FileUpload1" runat="server" /> 
                                               </div>
                                           </div>
 
 
-                                      </div>
-
-                                       <div class="row">
-                                          <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3" id="">
-                                              <label for="sel1">Date:</label>
-                                              <div class="input-group date" id="datepicker2" data-provide="datepicker">
-                                                  <asp:TextBox ID="toDate" class="form-control pull-right" runat="server"></asp:TextBox>
-                                                  <div class="input-group-addon">
-                                                      <span class="glyphicon glyphicon-th"></span>
-                                                  </div>
-                                              </div>
                                           </div>
-                                           </div>
-                                           <div class="row">
 
-                                            <div class="col-md-2  col-lg-2">
+                                          <div class="row">
+                                              
+                                                <div class="col-md-2  col-lg-2">
                                               <label for="sel1">&nbsp;</label>
                                               <asp:Button ID="Button1" class="btn btn-primary pull-right btn-block" runat="server" OnClick="Button1_Click" Text="Upload" />
-                                              <asp:Label ID="label1" runat="server"></asp:Label>
+                                              <asp:Label ID="label4" runat="server"></asp:Label>
                                           </div>
-                                               </div>
+                                              
+
+
+                                          </div>
+
                                           <br />
 
-                                      <div class="row">
-                                           <div class="col-md-6  col-lg-6">
-                                            
-                                               <asp:Label runat="server" style="color:darkgreen; " ID="Label2"></asp:Label>
-                                                <asp:Label runat="server" style="color:red; " ID="Label3"></asp:Label>
-                                               </div>
+                                          <div class="row">
+                                              <div class="col-md-6  col-lg-6">
+
+                                                  <asp:Label runat="server" Style="color: darkgreen;" ID="Label2"></asp:Label>
+                                                  <asp:Label runat="server" Style="color: red;" ID="Label3"></asp:Label>
+                                              </div>
+
+                                          </div>
+
+                                          <br />
+                                          <br />
+
+
+                                          <div class="row">
+                                              <div class="col-md-3 col-sm-3 col-xs-12 col-lg-3" id="">
+                                                  <div class="form-group">
+                                                      <label for="sel1">Dates:</label>
+                                                      <select class="form-control" name="date" runat="server" id="date">
+                                                      </select>
+                                                  </div>
+                                              </div>
+
+                                          </div>
+
+
+                                          <div class="row">
+
+                                              <div class="col-md-2  col-lg-2">
+                                                  <label for="sel1">&nbsp;</label>
+                                                  <asp:Button ID="Button2" class="btn btn-primary pull-right btn-block" runat="server" OnClick="Button2_Click" Text="Sync" />
+                                                  <asp:Label ID="label1" runat="server"></asp:Label>
+                                              </div>
+                                          </div>
+                                          <br />
+
+                                          <div class="row">
+                                              <div class="col-md-6  col-lg-6">
+
+                                                  <asp:Label runat="server" Style="color: darkgreen;" ID="Label5"></asp:Label>
+                                                  <asp:Label runat="server" Style="color: red;" ID="Label6"></asp:Label>
+                                              </div>
+
+                                          </div>
+
 
                                       </div>
-
-                
-                     
-
-                    
-
-                                  </div>
 
 
                               </div>
@@ -397,7 +399,7 @@
                 var dateToday = new Date();
                 $('#datepicker1,#datepicker2').datepicker({
                     format: "yyyy-mm-dd",
-                //    startDate: "-36d",
+                    startDate: "-15d",
                     autoclose: true
                    
                 });
@@ -416,7 +418,60 @@
     </script>
     
   
-    
+      <script>
+
+        $(document).ready(function () {
+
+         
+
+                $.ajax({
+
+                    type: 'Post',
+                    url: 'TallySyncMrktg_Pay_Sales_O_CC_Avenue.aspx/data',
+                    contentType: "application/json; charset=utf-8",
+                    data: "{}",
+                    async: false,
+                    success: function (data) {
+                      
+                        $("#date").empty();
+                        $("#date").append("<option disabled selected value>Select an Option</option>");
+                        subJson = JSON.parse(data.d);
+
+                        $.each(subJson, function (key, value) {
+
+                            $.each(value, function (index1, value1) {
+                                
+                                if (value1[0] == "") {
+                                   
+                                } else {
+                                   
+                                  
+                                    $("#date").append("<option value='"+value1[0]+"'>"+value1[0]+"</option>");
+                                }
+                            });
+
+                        });
+
+                       
+                    },
+                    error: function (xhr, status, error) {
+                        var err = JSON.parse(xhr.responseText);
+                        alert(err.Message);
+                    }
+
+                });
+                return false;
+
+
+            });
+
+
+          
+
+
+
+
+    </script>
        
 </body>
 </html>
