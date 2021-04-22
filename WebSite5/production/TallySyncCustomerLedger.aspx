@@ -146,6 +146,7 @@
                               <ul class='nav child_menu'>
                                   <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
                                  <li><a href="TallySyncCustomerLedger.aspx">Customer Ledger Sync</a></li>
+				 <li><a href="TallySync_Transactions.aspx">Sync Ledger Register</a></li>
                               </ul>
                           </li>
 

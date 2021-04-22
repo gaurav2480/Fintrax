@@ -17,11 +17,18 @@ public partial class WebSite5_production_Default : System.Web.UI.Page
      
     }
 
+    public string data()
+    {
+        string value = Request.QueryString["val"];
+
+        return value;
+    }
 
 
 
 
-    protected void Button1_Click(object sender, EventArgs e)
+
+    /*protected void Button1_Click(object sender, EventArgs e)
     {
         string constr = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
         string query = "SELECT TOP 10 * FROM loans;";
@@ -68,5 +75,5 @@ public partial class WebSite5_production_Default : System.Web.UI.Page
                 }
             }
         }
-    }
+    }*/
 }

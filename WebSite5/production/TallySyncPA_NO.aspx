@@ -20,7 +20,7 @@
     <style>
 
           #sidebar-menu{
-         position: fixed;
+        
          width: 230px;
          margin-top:70px;
         }
@@ -139,11 +139,14 @@
 <li><a href="RollOver.aspx">Roll Over</a></li>
 <li><a href="ProjectedInterestDetailsHisto.aspx">Historical EMI View</a></li>
 <li><a href="BulkReceiptTotal.aspx">Bulk Receipt Total</a></li>
+<li><a href="UploadBankStatement.aspx">Upload Other Receipts</a></li>
                               </ul>
                           </li>
                           <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
+                           <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
+                                 <li><a href="TallySyncCustomerLedger.aspx">Customer Ledger Sync</a></li>
+				 <li><a href="TallySync_Transactions.aspx">Sync Ledger Register</a></li>
                                  
                               </ul>
                           </li>
@@ -394,10 +397,9 @@
      <script type="text/javascript">
            
             $(document).ready(function () {
-                var dateToday = new Date();
+                
                 $('#datepicker1,#datepicker2').datepicker({
                     format: "yyyy-mm-dd",
-                    startDate: "-15d",
                     autoclose: true
                    
                 });

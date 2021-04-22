@@ -96,7 +96,8 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                
                 string value = row["Value Date"].ToString();
                 string drcr = row["Cr/Dr"].ToString();
-                if (value == "")
+                string description = row["Description"].ToString();
+                    if (value == "")
                 {
 
                 }
@@ -109,15 +110,15 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                     }else
                     {
                         string dateData = value.Replace('-', '/');
-                            drcr = drcr.Replace(',', ' ');
-                            drcr = drcr.Replace('&', ' ');
+                            description = description.Replace(',', ' ');
+                            description = description.Replace('&', ' ');
 
-                     DateTime data = DateTime.ParseExact(dateData, "MM/dd/yyyy", null);
+                        DateTime data = DateTime.ParseExact(dateData, "MM/dd/yyyy", null);
                         double date = data.ToOADate();
                         SqlConnection sqlcon = new SqlConnection(conn);
                         sqlcon.Open();
 
-                        string selectQuery = "select * from BANKDEPOSITSLIPDETAILS where CHEQUENO='" + row["Description"] + "' and AMOUNT='" + row["Transaction Amount(INR)"] + "' and CHEQUEDATE='"+date+"'";
+                        string selectQuery = "select * from BANKDEPOSITSLIPDETAILS where CHEQUENO='" + description + "' and AMOUNT='" + row["Transaction Amount(INR)"] + "' and CHEQUEDATE='"+date+"'";
                         SqlCommand cmd1 = new SqlCommand(selectQuery, sqlcon);
                         SqlDataReader reader = cmd1.ExecuteReader();
                         if (reader.HasRows)
@@ -162,7 +163,7 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                                 cmd.ExecuteNonQuery();
 
 
-                                string InsertStatementQuery = "Insert into BANKDEPOSITSLIPDETAILS(CSID,LNID,INSTALLMENTNO,CHEQUENO,CHEQUEDATE,MICRCODE,BANKNAME,BRANCH,CITY,AMOUNT,BALANCEAMOUNT,REALISATIONDATE,RETURNDATE,CHSTATID,IDENTIFIEDCHQ,DOCFEEINCLUDED,BULKRECEIPT,OTHERCHARGES,RECEIPTREF,PAIDDATE,LEDID) values('" + csid + "','0','" + row["Description"] + "','" + row["Description"] + "','" + date + "','0','','','','" + row["Transaction Amount(INR)"] + "','" + row["Transaction Amount(INR)"] + "','0','0','0','" + IDF + "','0','0','0.00','0','0','" + ID + "')";
+                                string InsertStatementQuery = "Insert into BANKDEPOSITSLIPDETAILS(CSID,LNID,INSTALLMENTNO,CHEQUENO,CHEQUEDATE,MICRCODE,BANKNAME,BRANCH,CITY,AMOUNT,BALANCEAMOUNT,REALISATIONDATE,RETURNDATE,CHSTATID,IDENTIFIEDCHQ,DOCFEEINCLUDED,BULKRECEIPT,OTHERCHARGES,RECEIPTREF,PAIDDATE,LEDID) values('" + csid + "','0','" + description + "','" + description + "','" + date + "','0','','','','" + row["Transaction Amount(INR)"] + "','" + row["Transaction Amount(INR)"] + "','0','0','0','" + IDF + "','0','0','0.00','0','0','" + ID + "')";
                                 SqlCommand statementCmd = new SqlCommand(InsertStatementQuery, sqlcon);
                                 statementCmd.ExecuteNonQuery();
 
@@ -174,7 +175,7 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                                         long trid = tridReader.GetInt64(0);
                                         trid = trid + 1;
 
-                                        string InsertLedgerReg = "insert into LEDGERREGISTER(LRDATE,DRLEDID,CRLEDID,LEDAMOUNT,ATID,TRID,NARRATION,LNID,REMARKS,SYNID) values('"+date+"','5','4023','"+ row["Transaction Amount(INR)"] + "','1','"+trid+"','','0','"+ row["Description"] + "','0')";
+                                        string InsertLedgerReg = "insert into LEDGERREGISTER(LRDATE,DRLEDID,CRLEDID,LEDAMOUNT,ATID,TRID,NARRATION,LNID,REMARKS,SYNID) values('"+date+"','5','4023','"+ row["Transaction Amount(INR)"] + "','1','"+trid+"','','0','"+ description + "','0')";
                                         SqlCommand ledgerRegCmd = new SqlCommand(InsertLedgerReg, sqlcon);
                                         ledgerRegCmd.ExecuteNonQuery();
 

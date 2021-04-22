@@ -40,8 +40,21 @@ public class Fintrax
         return connection;
     }
 
+    public static SqlConnection GetDBConnection_SalesApp()
+    {
+        // Get the connection string from the configuration file
+        string connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString_SalesApp"].ConnectionString;
 
-  public static DataSet LoadCybilDetailsOnLoanNo(string loanNo)
+        // Create a new connection object
+        SqlConnection connection = new SqlConnection(connectionString);
+
+        // Open the connection, and return it
+        connection.Open();
+        return connection;
+    }
+
+
+    public static DataSet LoadCybilDetailsOnLoanNo(string loanNo)
     {
         SqlDataAdapter da;
         DataSet ds = new DataSet();
@@ -1326,8 +1339,30 @@ return datatable;
 
     }
 
+    public static DataSet DSR_Tally_Report(string startDate, string endDate)
+    {
 
-  public static DataSet ProjectedInterestDetailsReport_Summary(string fromDate, string toDate, string statusValue, string disStatus,string US)
+        using (SqlConnection con = Fintrax.GetDBConnection_SalesApp())
+        {
+
+            SqlCommand cmd_sp = new SqlCommand("[DSR_Tally_Sync]", con);
+
+            cmd_sp.CommandType = CommandType.StoredProcedure;
+            cmd_sp.Parameters.AddWithValue("@startDate", startDate);
+            cmd_sp.Parameters.AddWithValue("@endDate", endDate);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd_sp;
+            DataSet datatable = new DataSet();
+            da.Fill(datatable);
+            return datatable;
+
+        }
+
+    }
+
+
+
+    public static DataSet ProjectedInterestDetailsReport_Summary(string fromDate, string toDate, string statusValue, string disStatus,string US)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1507,6 +1542,26 @@ return datatable;
             cmd_sp.Parameters.AddWithValue("@fromDate", fromDate);
             cmd_sp.Parameters.AddWithValue("@toDate", toDate);
 
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd_sp;
+            DataSet datatable = new DataSet();
+            da.Fill(datatable);
+            return datatable;
+
+        }
+
+    }
+
+
+    public static DataSet GSTIN_Details(string name)
+    {
+
+        using (SqlConnection con = Fintrax.GetDBConnection())
+        {
+            SqlCommand cmd_sp;
+            cmd_sp = new SqlCommand("GSTIN", con);
+            cmd_sp.CommandType = CommandType.StoredProcedure;
+            cmd_sp.Parameters.AddWithValue("@Name", name);
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd_sp;
             DataSet datatable = new DataSet();

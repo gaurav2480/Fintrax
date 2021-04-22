@@ -132,7 +132,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
 
                     if (CGST == 0 && SGST == 0)
                     {
-                        int i = 82;
+                        int i = 87;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -200,7 +200,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -222,7 +222,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                     }
                     else
                     {
-                        int i = 82;
+                        int i = 87;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -238,8 +238,8 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
-                        xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
-                      //  xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
+                       // xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
+                       xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
                         xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Convert.ToDateTime(Transmittal_Date).ToString("dd/MM/yyyy") + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + "Prestige Holiday Resorts (Booking Fees)" + "</PARTYLEDGERNAME>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Sales" + "</VOUCHERTYPENAME>\r\n";
@@ -247,8 +247,8 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
                         xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
                         xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Invoice Voucher View" + "</PERSISTEDVIEW>\r\n";
-                        //xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + "20210301" + "</EFFECTIVEDATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + year + "" + month + "" + day + "</EFFECTIVEDATE>\r\n";
+                       xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + "20210301" + "</EFFECTIVEDATE>\r\n";
+                       // xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + year + "" + month + "" + day + "</EFFECTIVEDATE>\r\n";
                         xmlstc1 = xmlstc1 + "<ISINVOICE>" + "Yes" + "</ISINVOICE>\r\n";
                         xmlstc1 = xmlstc1 + "<ISVATDUTYPAID>" + "Yes" + "</ISVATDUTYPAID>\r\n";
 
@@ -336,7 +336,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -361,7 +361,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                 {
                     if (CGST == 0 && SGST == 0)
                     {
-                        int i = 166;
+                        int i = 169;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -379,7 +379,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                        // xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Transmittal_Date + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
+                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Convert.ToDateTime(Transmittal_Date).ToString("dd/MM/yyyy") + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + "Prestige Holiday Resorts (Booking Fees)" + "</PARTYLEDGERNAME>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Sales" + "</VOUCHERTYPENAME>\r\n";
                         xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
@@ -429,7 +429,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -451,7 +451,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                     }
                     else
                     {
-                        int i = 166;
+                        int i = 169;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -469,7 +469,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                       //  xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Transmittal_Date + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
+                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Convert.ToDateTime(Transmittal_Date).ToString("dd/MM/yyyy") + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + "Prestige Holiday Resorts (Booking Fees)" + "</PARTYLEDGERNAME>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Sales" + "</VOUCHERTYPENAME>\r\n";
                         xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
@@ -565,7 +565,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -592,7 +592,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
 
                     if (CGST == 0 && SGST == 0)
                     {
-                        int i = 728;
+                        int i = 745;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -610,7 +610,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                       //  xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Transmittal_Date + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
+                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Convert.ToDateTime(Transmittal_Date).ToString("dd/MM/yyyy") + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + "Prestige Holiday Resorts (Booking Fees)" + "</PARTYLEDGERNAME>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Sales" + "</VOUCHERTYPENAME>\r\n";
                         xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
@@ -660,7 +660,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -682,7 +682,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                     }
                     else
                     {
-                        int i = 728;
+                        int i = 745;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -700,7 +700,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                        // xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Transmittal_Date + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
+                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Convert.ToDateTime(Transmittal_Date).ToString("dd/MM/yyyy") + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + "Prestige Holiday Resorts (Booking Fees)" + "</PARTYLEDGERNAME>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Sales" + "</VOUCHERTYPENAME>\r\n";
                         xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
@@ -796,7 +796,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -821,7 +821,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                 {
                     if (CGST == 0 && SGST == 0)
                     {
-                        int i = 444;
+                        int i = 450;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -839,7 +839,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                        // xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Transmittal_Date + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
+                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Convert.ToDateTime(Transmittal_Date).ToString("dd/MM/yyyy") + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + "Prestige Holiday Resorts (Booking Fees)" + "</PARTYLEDGERNAME>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Sales" + "</VOUCHERTYPENAME>\r\n";
                         xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
@@ -886,7 +886,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -908,7 +908,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                     }
                     else
                     {
-                        int i = 444;
+                        int i = 450;
                         string xmlstc1 = "<ENVELOPE>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
@@ -926,7 +926,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                      //   xmlstc1 = xmlstc1 + "<DATE>" + "20210301" + "</DATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Transmittal_Date + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
+                        xmlstc1 = xmlstc1 + "<NARRATION>" + Transaction_Id + " " + receipt_No + " " + Convert.ToDateTime(Transmittal_Date).ToString("dd/MM/yyyy") + " " + Booking_ID + " " + Client_Name + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + "Prestige Holiday Resorts (Booking Fees)" + "</PARTYLEDGERNAME>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Sales" + "</VOUCHERTYPENAME>\r\n";
                         xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
@@ -1022,7 +1022,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -1062,9 +1062,9 @@ public partial class WebSite5_production_TallySyncMrktg_Pay : System.Web.UI.Page
 
 
             }
-
-            Label5.Text = "Updated Successfully!!!";
-            Response.AppendHeader("Refresh", "04;url=TallySyncMrktg_Pay.aspx");
+//Label5.Text = result;
+           Label5.Text = "Updated Successfully!!!";
+           Response.AppendHeader("Refresh", "04;url=TallySyncMrktg_Pay.aspx");
 
         }
 

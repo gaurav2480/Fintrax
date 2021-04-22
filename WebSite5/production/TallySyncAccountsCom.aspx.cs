@@ -27,7 +27,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
         string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
         SqlConnection sqlcon = new SqlConnection(conn);
         string JSON = "{\n \"names\":[";
-        string query = "select distinct Type from TallySyncAccountsCom  where  status='Active';";
+        string query = "select distinct Type from TallySyncAccountsCom  where  status='Active' and Total > 0 ;";
         sqlcon.Open();
         SqlCommand cmd = new SqlCommand(query, sqlcon);
         SqlDataReader reader = cmd.ExecuteReader();
@@ -108,15 +108,61 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
 
                 if(Types=="COM FIXED")
                 {
-                    ledgerType = "COM FIXED COMMISSION (Unreg)";
+                    if (Total > 0 && CGST > 0 && SGST > 0)
+                    {
+                        ledgerType = "Com Fixed Comm (Reg)";
+                    }
+                    else if (Total > 0 && CGST == 0 && SGST == 0 && IGST > 0)
+                    {
+                        ledgerType = "Com Fixed Comm (Reg-IGST)";
+
+                    }
+                    else if (Total > 0 && CGST == 0 && SGST == 0 && IGST == 0)
+                    {
+                        ledgerType = "COM FIXED COMMISSION (Unreg)";
+                    }
+
+                      
                 }else if (Types == "SPIFF/BONUS")
                 {
-                    ledgerType = "Spiff/Bonus (Unreg)";
+                    if (Total > 0 && CGST > 0 && SGST > 0)
+                    {
+                        ledgerType = "Spiff/Bonus ( Registered)";
+                    }
+                    else if (Total > 0 && CGST == 0 && SGST == 0 && IGST > 0)
+                    {
+                        ledgerType = "Spiff/Bonus (REG- IGST)";
 
+                    }
+                    else if (Total > 0 && CGST == 0 && SGST == 0 && IGST == 0)
+                    {
+                        ledgerType = "Spiff/Bonus (Unreg)";
+                    }
+                    
+
+                }else if (Types == "COM BONUS")
+                {
+                    if (Total > 0 && CGST > 0 && SGST > 0)
+                    {
+                        ledgerType = "Com Bonus (Reg)";
+                    }
+                    else if (Total > 0 && CGST == 0 && SGST == 0 && IGST > 0)
+                    {
+                        ledgerType = "Com Bonus (Reg-IGST)";
+
+                    }
+                    else if (Total > 0 && CGST == 0 && SGST == 0 && IGST == 0)
+                    {
+                        ledgerType = "COM-BONUS (Unreg)";
+                    }
                 }
 
+                DataSet ds = Fintrax.GSTIN_Details(Name);
+                string GSTIN_No= ds.Tables[0].Rows[0]["GSTIN"].ToString();
+                string State = ds.Tables[0].Rows[0]["STATE"].ToString();
 
-                
+
+
 
                 int dayInt = Date.Day;
                 string day = Date.Day.ToString();
@@ -131,6 +177,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     month = "0" + month;
                 }
                 int year = Date.Year;
+
 
 
                 if (Total>0 && CGST > 0 && SGST > 0)
@@ -158,11 +205,12 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</BASICBUYERADDRESS.LIST>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                     xmlstc1 = xmlstc1 + "<REFERENCEDATE>" + year + "" + month + "" + day + "</REFERENCEDATE>\r\n";
-                    xmlstc1 = xmlstc1 + "<STATENAME>Goa</STATENAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<STATENAME>"+ State + "</STATENAME>\r\n";
                  
                     xmlstc1 = xmlstc1 + "<NARRATION>" + Narration + "</NARRATION>\r\n";
                     xmlstc1 = xmlstc1 + "<COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\r\n";
-                    xmlstc1 = xmlstc1 + "<PLACEOFSUPPLY>Goa</PLACEOFSUPPLY>\r\n";
+                    xmlstc1 = xmlstc1 + "<PARTYGSTIN>" + GSTIN_No + "</PARTYGSTIN>\r\n";
+                    xmlstc1 = xmlstc1 + "<PLACEOFSUPPLY>"+ State + "</PLACEOFSUPPLY>\r\n";
                     xmlstc1 = xmlstc1 + "<PARTYNAME>" + Name + "</PARTYNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + Name + "</PARTYLEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Purchase" + "</VOUCHERTYPENAME>\r\n";
@@ -175,7 +223,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<BASICBUYERNAME>" + "Prestige Holiday Resorts LLP - (2feb2017-18)" + "</BASICBUYERNAME>\r\n";
 
                     xmlstc1 = xmlstc1 + "<CONSIGNEESTATENAME>" + "Goa" + "</CONSIGNEESTATENAME>\r\n";
-                    xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "Accounts" + "</ENTEREDBY>\r\n";
+                    xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "anita" + "</ENTEREDBY>\r\n";
                     xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + year + "" + month + "" + day + "</EFFECTIVEDATE>\r\n";
                     xmlstc1 = xmlstc1 + "<HASCASHFLOW>" + "Yes" + "</HASCASHFLOW>\r\n";
                     xmlstc1 = xmlstc1 + "<ISINVOICE>" + "Yes" + "</ISINVOICE>\r\n";
@@ -194,13 +242,12 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<NAME>" + InvoiceNo + "</NAME>\r\n";
                     xmlstc1 = xmlstc1 + "<BILLTYPE>" + "New Ref" + "</BILLTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<AMOUNT>" + Net + "</AMOUNT>\r\n";
-
                     xmlstc1 = xmlstc1 + "</BILLALLOCATIONS.LIST>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</LEDGERENTRIES.LIST>" + "\r\n";
 
                     
                     xmlstc1 = xmlstc1 + "<LEDGERENTRIES.LIST>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "Com Fixed Comm (Reg)" + "</LEDGERNAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + ledgerType + "</LEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
                     xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
                     xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
@@ -216,7 +263,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<BASICRATEOFINVOICETAX.LIST TYPE='Number'>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<BASICRATEOFINVOICETAX>" + "9" + "</BASICRATEOFINVOICETAX>\r\n";
                     xmlstc1 = xmlstc1 + "</BASICRATEOFINVOICETAX.LIST>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "Input Tax CGST-9 %" + "</LEDGERNAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "Input Tax  CGST- 9%" + "</LEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
                     xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
                     xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
@@ -231,7 +278,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<BASICRATEOFINVOICETAX.LIST TYPE='Number'>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<BASICRATEOFINVOICETAX>" + "9" + "</BASICRATEOFINVOICETAX>\r\n";
                     xmlstc1 = xmlstc1 + "</BASICRATEOFINVOICETAX.LIST>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "Input Tax SGST-9 %" + "</LEDGERNAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "Input Tax  SGST- 9%" + "</LEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
                     xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
                     xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
@@ -262,8 +309,8 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                   // HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
+                     //  HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -308,10 +355,11 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</BASICBUYERADDRESS.LIST>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                     xmlstc1 = xmlstc1 + "<REFERENCEDATE>" + year + "" + month + "" + day + "</REFERENCEDATE>\r\n";
-                    xmlstc1 = xmlstc1 + "<STATENAME>Goa</STATENAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<STATENAME>"+State+"</STATENAME>\r\n";
                     xmlstc1 = xmlstc1 + "<NARRATION>" + Narration + "</NARRATION>\r\n";
                     xmlstc1 = xmlstc1 + "<COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\r\n";
-                    xmlstc1 = xmlstc1 + "<PLACEOFSUPPLY>Goa</PLACEOFSUPPLY>\r\n";
+                    xmlstc1 = xmlstc1 + "<PARTYGSTIN>" + GSTIN_No + "</PARTYGSTIN>\r\n";
+                    xmlstc1 = xmlstc1 + "<PLACEOFSUPPLY>" + State + "</PLACEOFSUPPLY>\r\n";
                     xmlstc1 = xmlstc1 + "<PARTYNAME>" + Name + "</PARTYNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + Name + "</PARTYLEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Purchase" + "</VOUCHERTYPENAME>\r\n";
@@ -324,7 +372,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<BASICBUYERNAME>" + "Prestige Holiday Resorts LLP - (2feb2017-18)" + "</BASICBUYERNAME>\r\n";
 
                     xmlstc1 = xmlstc1 + "<CONSIGNEESTATENAME>" + "Goa" + "</CONSIGNEESTATENAME>\r\n";
-                    xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "Accounts" + "</ENTEREDBY>\r\n";
+                    xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "anita" + "</ENTEREDBY>\r\n";
                     xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + year + "" + month + "" + day + "</EFFECTIVEDATE>\r\n";
                     xmlstc1 = xmlstc1 + "<HASCASHFLOW>" + "Yes" + "</HASCASHFLOW>\r\n";
                     xmlstc1 = xmlstc1 + "<ISINVOICE>" + "Yes" + "</ISINVOICE>\r\n";
@@ -345,13 +393,12 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<NAME>" + InvoiceNo + "</NAME>\r\n";
                     xmlstc1 = xmlstc1 + "<BILLTYPE>" + "New Ref" + "</BILLTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<AMOUNT>" + Net + "</AMOUNT>\r\n";
-
                     xmlstc1 = xmlstc1 + "</BILLALLOCATIONS.LIST>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</LEDGERENTRIES.LIST>" + "\r\n";
 
 
                     xmlstc1 = xmlstc1 + "<LEDGERENTRIES.LIST>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "Com Fixed Comm (Reg-IGST)" + "</LEDGERNAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + ledgerType + "</LEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
                     xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
                     xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
@@ -367,7 +414,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<BASICRATEOFINVOICETAX.LIST TYPE='Number'>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<BASICRATEOFINVOICETAX>" + "18" + "</BASICRATEOFINVOICETAX>\r\n";
                     xmlstc1 = xmlstc1 + "</BASICRATEOFINVOICETAX.LIST>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "INPUT TAX IGST  18 %" + "</LEDGERNAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "INPUT TAX IGST  18%" + "</LEDGERNAME>\r\n";
                     xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
                     xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
                     xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
@@ -398,8 +445,8 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    // HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
+                     //HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -478,7 +525,6 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<NAME>" + InvoiceNo + "</NAME>\r\n";
                     xmlstc1 = xmlstc1 + "<BILLTYPE>" + "New Ref" + "</BILLTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<AMOUNT>" + Net + "</AMOUNT>\r\n";
-
                     xmlstc1 = xmlstc1 + "</BILLALLOCATIONS.LIST>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</LEDGERENTRIES.LIST>" + "\r\n";
 
@@ -518,8 +564,8 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    // HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
+                   // HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                     HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";

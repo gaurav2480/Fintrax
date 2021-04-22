@@ -203,7 +203,7 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9031");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";

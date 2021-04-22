@@ -121,11 +121,13 @@
                           <ul class="nav side-menu">
 
 
-                          <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
+
+                                   <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
                                   <li><a href="TallySyncMrktg_Pay.aspx">Sync Transmittal Sales Voucher</a></li>
                                   <li><a href="TallySyncMrktg_Pay.aspx">Sync Call Center Sales Voucher</a></li>
                                    <li><a href="TallySyncMrktg_Pay_Sales_O_CC_Avenue.aspx">Sync Call Center Sales Voucher CC Avenue</a></li>
+                                  <li><a href="TallySync_DSR.aspx">DSR To Tally Sync</a></li>
                               </ul>
                           </li>
 
@@ -223,7 +225,7 @@
 
                                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " id="head">
                                               <br />
-                                              <h3 class="text-center">SALES VOUCHER CREATION IN TALLY</h3>
+                                              <h3 class="text-center">DSR SYNC IN TALLY</h3>
                                           </div>
                                       </div>
                                   </div>
@@ -273,8 +275,8 @@
                                           <div class="row">
                                               <div class="col-md-3 col-sm-3 col-xs-12 col-lg-3" id="">
                                                   <div class="form-group">
-                                                      <label for="sel1">Dates:</label>
-                                                      <select class="form-control" name="date" runat="server" id="date">
+                                                      <label for="sel1">Venue:</label>
+                                                      <select class="form-control" name="venue" runat="server" id="venue">
                                                       </select>
                                                   </div>
                                               </div>
@@ -321,8 +323,7 @@
     <!-- compose -->
     <div class="compose col-md-6 col-xs-12">
         <div class="compose-header">
-        New Message
-        <button type="button" class="close compose-close">
+        New Message<button type="button" class="close compose-close">
           <span>×</span>
         </button>
       </div>
@@ -427,14 +428,14 @@
                 $.ajax({
 
                     type: 'Post',
-                    url: 'TallySyncMrktg_Pay_Sales_O_CC_Avenue.aspx/data',
+                    url: 'TallySync_DSR.aspx/data',
                     contentType: "application/json; charset=utf-8",
                     data: "{}",
                     async: false,
                     success: function (data) {
                       
-                        $("#date").empty();
-                        $("#date").append("<option disabled selected value>Select an Option</option>");
+                        $("#venue").empty();
+                        $("#venue").append("<option disabled selected value>Select an Option</option>");
                         subJson = JSON.parse(data.d);
 
                         $.each(subJson, function (key, value) {
@@ -446,7 +447,7 @@
                                 } else {
                                    
                                   
-                                    $("#date").append("<option value='"+value1[0]+"'>"+value1[0]+"</option>");
+                                    $("#venue").append("<option value='" + value1[0] + "'>" + value1[0] + "</option>");
                                 }
                             });
 

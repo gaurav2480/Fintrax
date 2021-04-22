@@ -12,6 +12,8 @@ using ClosedXML.Excel;
 using System.IO;
 using System.Net;
 using System.Globalization;
+using System.Diagnostics;
+
 public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.Page
 {
 
@@ -30,16 +32,25 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
     {
         try
         {
+            int j = 0;
+            int k = 0;
+            int l = 0;
+
+            int m = 0;
+            int n = 0;
+            int o = 0;
             TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
             string startDate = fromDate.Text;
             string endDate = toDate.Text;
             string result = "";
             string result1 = "";
+            string log = "";
+            string log1 = "";
             string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
             SqlConnection sqlcon = new SqlConnection(conn);
             sqlcon.Open();
             //     string query = "select  distinct  LRID,convert(datetime,lrdate-2,103),lr.DRLEDID,lr.CRLEDID,led2.LEDGERNAME,led.LEDGERNAME,cast(lr.LEDAMOUNT as float),LR.ATID,lr.TRID,lr.NARRATION,lr.LNID,lr.REMARKS,lr.SYNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID where  SYNID=0 and  (LEDAMOUNT>0) and convert(datetime,lrdate-2,103)  between convert(datetime,'"+ startDate + "',120) and convert(datetime,'"+endDate+"',120) and ATID in(1,2)";
-            string query = "select  distinct  LRID,convert(datetime,lrdate-2,103),lr.DRLEDID,lr.CRLEDID,led2.LEDGERNAME,led.LEDGERNAME,cast(lr.LEDAMOUNT as float),LR.ATID,lr.TRID,lr.NARRATION,lr.LNID,lr.REMARKS,lr.SYNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID where  SYNID=1 and  (LEDAMOUNT>0) and convert(datetime,lrdate-2,103)  between convert(datetime,'2021-01-02',120) and convert(datetime,'2021-01-02',120) and LRID in(611016,611026) and ATID in(3)";
+            string query = "select  distinct top(10) LRID,convert(datetime,lrdate-19,103),lr.DRLEDID,lr.CRLEDID,led2.LEDGERNAME,led.LEDGERNAME,cast(lr.LEDAMOUNT as float),LR.ATID,lr.TRID,lr.NARRATION,lr.LNID,lr.REMARKS,lr.SYNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID where  SYNID=0 and  (LEDAMOUNT>=1) and convert(datetime,lrdate-2,103)  between convert(datetime,'" + startDate + "',120) and convert(datetime,'" + endDate + "',120)  and ATID in(1,2,3)";
             SqlCommand cmd = new SqlCommand(query, sqlcon);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -152,6 +163,7 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
                     using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
                     {
                         result = sr.ReadToEnd();
+                        log += result + "\r\n";
                         sr.Close();
                     }
 
@@ -250,6 +262,7 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
                     using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
                     {
                         result = sr.ReadToEnd();
+                        log += result + "\r\n";
                         sr.Close();
                     }
 
@@ -356,6 +369,7 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
                     using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
                     {
                         result = sr.ReadToEnd();
+                        log += result + "\r\n";
                         sr.Close();
                     }
                 }
@@ -363,14 +377,43 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
 
                 if (result.Contains("<CREATED>1</CREATED>"))
                 {
+                    j++;
                     string query1 = "update LEDGERREGISTER set SYNID=1 where LRID='"+LRID+"'";
                     SqlCommand cmd1 = new SqlCommand(query1, sqlcon);
                     cmd1.ExecuteNonQuery();
                 }
 
+               else if (result.Contains("<ALTERED>1</ALTERED>"))
+                {
+                    k++;
+                }
+
+                else if (result.Contains("<ERRORS>1</ERRORS>"))
+                {
+                    l++;
+                }
+
+
             }
 
+            log += "LEDGER REGISTER SYNC: CREATED:" + j + " ALTERED:" + k + " ERRORS:" + l + "\r\n";
+           
+
+            string data = log;
+
+            //    string path = @"\\192.168.0.16\C$\Tally_Logs\";
+            string path = "C:/Tally_Logs/";
+            VerifyDir(path);
+            string fileName = DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString() + "_Logs.txt";
+            System.IO.StreamWriter file = new System.IO.StreamWriter(path + fileName, true);
+            file.WriteLine(data);
+            file.Close();
+
+
             Label2.Text = "Updated Successfully!!!";
+         //   System.Diagnostics.Process.Start(@"C:/Tally_Logs/2142021_Logs.txt");
+            //System.Diagnostics.Process.Start(@"notepad.exe", @"\\192.168.10.40\C$\Tally_Logs\2142021_Logs.txt");
+            // System.Diagnostics.Process.Start(@"notepad.exe", @"\\192.168.0.16\C$\Tally_Logs\2142021_Logs.txt");
             Response.AppendHeader("Refresh", "04;url=TallySync_Transactions.aspx");
 
             reader.Close();
@@ -385,6 +428,38 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
         }
         
 
+    }
+
+    public static void VerifyDir(string path)
+    {
+        try
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+
+            if (!dir.Exists)
+            {
+                dir.Create();
+            }
+            else
+            {
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo di in dir.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                dir.Create();
+
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
 }

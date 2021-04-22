@@ -204,8 +204,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay_Sales_O_CC_Avenue : 
                 xmlstc1 = xmlstc1 + "</BODY>";
                 xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9029");
-             //   HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -324,7 +323,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay_Sales_O_CC_Avenue : 
 
                 }else
                 {
-                    string InsertQuery = "Insert into TallySyncAcc_Mrktg_Pay_Sales_O values('" + row["CCAvenue Ref#"] + "','" + row["Order Datetime"] + "','','','','" + row["Gross Amount"] + "','" + row["Order Bank Response"] + "','" + row["Order Status"] + "','" + row["Order Stlmt Date"] + "','CC_Avenue','','','','Active')";
+                    string InsertQuery = "Insert into TallySyncAcc_Mrktg_Pay_Sales_O values('" + row["CCAvenue Ref#"] + "','" + row["Order Datetime"] + "','','','','" + row["Gross Amount"] + "','" + row["Order Bank Response"] + "','" + row["Order Status"] + "','" + row["Order Datetime"] + "','CC_Avenue','','','','Active')";
                     SqlCommand cmd = new SqlCommand(InsertQuery, sqlcon);
                     cmd.ExecuteNonQuery();
                         

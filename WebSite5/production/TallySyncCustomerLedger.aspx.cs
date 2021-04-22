@@ -30,14 +30,24 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
     {
         try
         {
-           // string LoanNo = loanNo.Text;
+           
+            int j = 0;
+            int k = 0;
+            int l = 0;
+
+            int m = 0;
+            int n = 0;
+            int o = 0;
+            // string LoanNo = loanNo.Text;
             string result1 = "";
             string result = "";
+            string log = "";
+            string log1 = "";
             string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
             SqlConnection sqlcon = new SqlConnection(conn);
             sqlcon.Open();
             // string query = "select LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(LN.LNDATE),Year(LN.LNDATE)  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID  where LN.ACTIVE in(3,0) and ln.DISBURSEMENTSTATUS = 0 and LOANNO in('PS624Z3')";
-            string query = "declare @Table as table ([Count] int, LOANNO varchar(50),LEDGERNAME varchar(150),[Address1] varchar(150),[Address2] varchar(150),[CITY] varchar(80),[STATE] varchar(80), PIN varchar(20), COUNTRY varchar(20), Pan varchar(30), LoanType bigint, loanMonth int, LoanYear int) insert into @Table select distinct  count(BDS.CSIDENTITY),LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(convert(datetime,ln.lndate-2,103)),Year(convert(datetime,ln.lndate-2,103))  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID join BANKDEPOSITSLIPDETAILS BDS on LN.LNID = BDS.LNID join LEDGERREGISTER LR on LN.LNID=LR.LNID where LN.ACTIVE in(3,0) and ln.DISBURSEMENTSTATUS = 0 and BDS.CHSTATID in(0,1) and(BDS.INSTALLMENTNO like '%DOC FEE%' or BDS.INSTALLMENTNO like '%1ST EMI%' or BDS.INSTALLMENTNO like '%FULL AND FINAL%') and LR.SYNID=0  group by LN.LOANNO,LED.LEDGERNAME,LN.EMIAMOUNT,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY ,LEDAD.[STATE],LEDAD.PIN,LN.LNDATE,LEDAD.COUNTRY,LEDAD.ADDRESS3,LT.LTID select LOANNO,LEDGERNAME,Address1,Address2,CITY,[STATE],PIN,COUNTRY,Pan,LoanType,loanMonth,LoanYear from @Table";
+            string query = "declare @Table as table ([Count] int, LOANNO varchar(50),LEDGERNAME varchar(150),[Address1] varchar(150),[Address2] varchar(150),[CITY] varchar(80),[STATE] varchar(80), PIN varchar(20), COUNTRY varchar(20), Pan varchar(30), LoanType bigint, loanMonth int, LoanYear int) insert into @Table select distinct  count(BDS.CSIDENTITY),LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(convert(datetime,ln.lndate-2,103)),Year(convert(datetime,ln.lndate-2,103))  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID join BANKDEPOSITSLIPDETAILS BDS on LN.LNID = BDS.LNID join LEDGERREGISTER LR on LN.LNID=LR.LNID where LN.ACTIVE in(3,0) and ln.DISBURSEMENTSTATUS = 0 and BDS.CHSTATID in(0,1) and(BDS.INSTALLMENTNO like '%DOC FEE%' or BDS.INSTALLMENTNO like '%1ST EMI%' or BDS.INSTALLMENTNO like '%1ST%' or BDS.INSTALLMENTNO like '%FULL AND FINAL%') and LR.SYNID=0  group by LN.LOANNO,LED.LEDGERNAME,LN.EMIAMOUNT,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY ,LEDAD.[STATE],LEDAD.PIN,LN.LNDATE,LEDAD.COUNTRY,LEDAD.ADDRESS3,LT.LTID select LOANNO,LEDGERNAME,Address1,Address2,CITY,[STATE],PIN,COUNTRY,Pan,LoanType,loanMonth,LoanYear from @Table";
             SqlCommand cmd = new SqlCommand(query, sqlcon);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -95,7 +105,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -107,6 +117,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
                     {
                         result1 = sr1.ReadToEnd();
+ log += result1 + "\r\n";
                         sr1.Close();
                     }
                     Label2.Text = result1;
@@ -153,7 +164,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -165,12 +176,26 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                     using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
                     {
                         result1 = sr1.ReadToEnd();
+ log += result1 + "\r\n";
                         sr1.Close();
                     }
-                    Label2.Text = result1;
+                 //   Label2.Text = result1;
 
                 }
+ if (result1.Contains("<CREATED>1</CREATED>"))
+                {
+                    j++;
+                }
 
+               else  if (result1.Contains("<ALTERED>1</ALTERED>"))
+                {
+                    k++;
+                }
+
+               else  if (result1.Contains("<ERRORS>1</ERRORS>"))
+                {
+                    l++;
+                }
           
 
 
@@ -215,7 +240,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                 xmlstc = xmlstc + "</BODY>";
                 xmlstc = xmlstc + "</ENVELOPE>";
 
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
                 httpWebRequest.Method = "POST";
                 httpWebRequest.ContentLength = xmlstc.Length;
                 httpWebRequest.ContentType = "application/x-www-form-urlencoded";
@@ -227,10 +252,45 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                 using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
                 {
                     result = sr.ReadToEnd();
+ log1 += result + "\r\n";
                     sr.Close();
                 }
+
+  if (result.Contains("<CREATED>1</CREATED>"))
+                {
+                    m++;
+
+                }
+               else  if (result.Contains("<ALTERED>1</ALTERED>"))
+                {
+                    n++;
+                }
+
+               else  if (result.Contains("<ERRORS>1</ERRORS>"))
+                {
+                    o++;
+                }
+
+
             }
-            Label2.Text = result;
+
+	    log += "GROUP CREATION: CREATED:" + j + " ALTERED:" + k + " ERRORS:" + l + "\r\n";
+            log1 += "CUSTOMER LEDGER CREATION: CREATED:" + m + " ALTERED: " + n + " ERRORS: " + o + " ";
+
+
+            string data = log + " " + log1;
+           // string path = "C:/Tally_Logs/";
+            string path = @"\\192.168.0.16\C$\Tally_Logs\";
+            VerifyDir(path);
+            string fileName = DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString() + "_Logs.txt";
+            System.IO.StreamWriter file = new System.IO.StreamWriter(path + fileName, true);
+            file.WriteLine(data);
+            file.Close();
+
+//  System.Diagnostics.Process.Start(@"notepad.exe", @"\\192.168.0.16\C$\Tally_Logs\2142021_Logs.txt");
+            Label2.Text = "Updated Successfully!!!";
+
+// Label2.Text = result;
             Response.AppendHeader("Refresh", "04;url=TallySyncCustomerLedger.aspx");
 
         }
@@ -243,6 +303,38 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
         }
         
 
+    }
+
+    public static void VerifyDir(string path)
+    {
+        try
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+
+            if (!dir.Exists)
+            {
+                dir.Create();
+            }
+            else
+            {
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo di in dir.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                dir.Create();
+
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
 }

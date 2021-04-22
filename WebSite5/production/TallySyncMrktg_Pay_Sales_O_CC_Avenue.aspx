@@ -126,6 +126,7 @@
                                   <li><a href="TallySyncMrktg_Pay.aspx">Sync Transmittal Sales Voucher</a></li>
                                   <li><a href="TallySyncMrktg_Pay.aspx">Sync Call Center Sales Voucher</a></li>
                                    <li><a href="TallySyncMrktg_Pay_Sales_O_CC_Avenue.aspx">Sync Call Center Sales Voucher CC Avenue</a></li>
+  <li><a href="TallySync_DSR.aspx">DSR To Tally Sync</a></li>
                               </ul>
                           </li>
 
