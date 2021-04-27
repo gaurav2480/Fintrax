@@ -968,7 +968,7 @@ return datatable;
 }
 
 }
- public static DataSet ProjectedInterestDetail(string fromDate, string toDate, string statusValue, string disStatus)
+ public static DataSet ProjectedInterestDetail(string fromDate, string toDate, string statusValue, string disStatus,string overdueExCount)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -980,6 +980,7 @@ return datatable;
             cmd_sp.Parameters.AddWithValue("@toDate", toDate);
             cmd_sp.Parameters.AddWithValue("@status", statusValue);
             cmd_sp.Parameters.AddWithValue("@disbursement", disStatus);
+            cmd_sp.Parameters.AddWithValue("@overdueCount", overdueExCount);
 
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd_sp;

@@ -26,8 +26,8 @@ public partial class WebSite5_production_ProjectedInterestDetails : System.Web.U
         string todate = Request.Form["toDate"];
         string statusValue = Request.Form["status"];
         string disStatus = Request.Form["disStatus"];
-        string US = Request.Form["US"];
-
+        string US = Request.Form["US"]; 
+        string overdueExCount = Request.Form["overdueExCount"];
         string date = fromDate + " " + toDate;
 
         DataSet ds;
@@ -38,7 +38,7 @@ public partial class WebSite5_production_ProjectedInterestDetails : System.Web.U
 
         
 
-        ds = Fintrax.ProjectedInterestDetail(fromdate, todate, statusValue, disStatus);
+        ds = Fintrax.ProjectedInterestDetail(fromdate, todate, statusValue, disStatus, overdueExCount);
         ds1 = Fintrax.ProjectedInterestDetailsReport_Summary(fromdate, todate, statusValue, disStatus, US);
         dataset1 = Fintrax.OVERDUE_WITH_SUMMARY_ASOFTODAY(statusValue, disStatus,US);
         
@@ -48,9 +48,18 @@ public partial class WebSite5_production_ProjectedInterestDetails : System.Web.U
                 ds.Tables[0].Columns.Remove(column);
         }
 
+        foreach (var column in ds.Tables[1].Columns.Cast<DataColumn>().ToArray())
+        {
+            if (ds.Tables[1].AsEnumerable().All(dr => dr.IsNull(column)))
+                ds.Tables[1].Columns.Remove(column);
+        }
+
         ds.Tables[0].TableName = "PROJECTED DETAILS";
         ds1.Tables[0].TableName = "PROJECTED SUMMARY INR";
         ds1.Tables[1].TableName = "PROJECTED SUMMARY USD";
+
+        ds.Tables[1].TableName = "PROJECTED EXCLUDING OVERDUE";
+
 
         dataset1.Tables[0].TableName = "OVERDUE ROW WISE"; 
         dataset1.Tables[1].TableName = "OVERDUE SUMMARY"; 

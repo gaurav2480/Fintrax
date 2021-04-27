@@ -28,7 +28,8 @@ public partial class WebSite5_production_LoanSanctionRegister : System.Web.UI.Pa
         
         DataSet ds = Fintrax.LOANSANCTIONREGISTER(startDate, endDate);
 
-        ds.Tables[0].TableName = "LOAN SANCTION REGISTER";
+        ds.Tables[0].TableName = "WITHOUT REFINANCE";
+        ds.Tables[1].TableName = "WITH REFINANCE";
 
         using (XLWorkbook wb = new XLWorkbook())
         {
