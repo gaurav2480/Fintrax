@@ -50,7 +50,7 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
             SqlConnection sqlcon = new SqlConnection(conn);
             sqlcon.Open();
             //     string query = "select  distinct  LRID,convert(datetime,lrdate-2,103),lr.DRLEDID,lr.CRLEDID,led2.LEDGERNAME,led.LEDGERNAME,cast(lr.LEDAMOUNT as float),LR.ATID,lr.TRID,lr.NARRATION,lr.LNID,lr.REMARKS,lr.SYNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID where  SYNID=0 and  (LEDAMOUNT>0) and convert(datetime,lrdate-2,103)  between convert(datetime,'"+ startDate + "',120) and convert(datetime,'"+endDate+"',120) and ATID in(1,2)";
-            string query = "select  distinct top(10) LRID,convert(datetime,lrdate-19,103),lr.DRLEDID,lr.CRLEDID,led2.LEDGERNAME,led.LEDGERNAME,cast(lr.LEDAMOUNT as float),LR.ATID,lr.TRID,lr.NARRATION,lr.LNID,lr.REMARKS,lr.SYNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID where  SYNID=0 and  (LEDAMOUNT>=1) and convert(datetime,lrdate-2,103)  between convert(datetime,'" + startDate + "',120) and convert(datetime,'" + endDate + "',120)  and ATID in(1,2,3)";
+            string query = "select  distinct top(10) LRID,convert(datetime,lrdate-28,103),lr.DRLEDID,lr.CRLEDID,led2.LEDGERNAME,led.LEDGERNAME,cast(lr.LEDAMOUNT as float),LR.ATID,lr.TRID,lr.NARRATION,lr.LNID,lr.REMARKS,lr.SYNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID where  SYNID=0 and  (LEDAMOUNT>=1) and convert(datetime,lrdate-2,103)  between convert(datetime,'" + startDate + "',120) and convert(datetime,'" + endDate + "',120)  and ATID in(1,2,3)";
             SqlCommand cmd = new SqlCommand(query, sqlcon);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -256,7 +256,7 @@ public partial class WebSite5_production_TallySync_Transactions : System.Web.UI.
                     httpWebRequest.ContentType = "application/x-www-form-urlencoded";
                     StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream());
                     streamWriter.Write(xmlstc);
-                    streamWriter.Close();
+                   // streamWriter.Close();
 
                     HttpWebResponse objResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                     using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
