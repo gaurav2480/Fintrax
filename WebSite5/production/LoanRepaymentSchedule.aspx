@@ -20,7 +20,7 @@
     <style>
 
           #sidebar-menu{
-         position: fixed;
+       
          width: 230px;
          margin-top:70px;
         }
@@ -121,10 +121,35 @@
                             <ul class="nav side-menu">
                               <li><a><i class='fa fa-home'></i>Reports<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="CROWNAUDITORSREPORT.aspx">CROWN AUDITORS REPORT</a></li>
-                                  <li><a href="LoanRepaymentSchedule.aspx">REPAYMNET SECHEDULE</a></li>
+                                       <li><a href="AdvanceEmi.aspx">Advance Emi</a></li>
+                                  <li><a href="LastRowPaidOfClosedLoans.aspx">Additional Capital @Closure</a></li>
+                                  <li><a href="Overdue_Historical.aspx">Overdue Historical</a></li>
+                                    <li><a href="Interest_Waiver.aspx">Interest Waiver</a></li>
+  <li><a href="previousCurrentSchedule.aspx">Interest Loss</a></li>
+<li><a href="ProjectedInterestDetails.aspx">Projected Interest Details</a></li>
+<li><a href="Loan_Debtors.aspx">Loan Debtors</a></li>
+<li><a href="Cancelled_Loans.aspx">Interest Loss - Cancelled</a></li>
+<li><a href="loanDueForDis.aspx">Loan Due For Disbursement</a></li>
+<li><a href="CollectionForMonth.aspx">Collection For Month</a></li>
+ <li><a href="CollectionBeforeDib.aspx">Collection Before Disbursement</a></li>
+  <li><a href="LoanSanctionRegister.aspx">Loan Sanction Register</a></li>
+<li><a href="LoanDisbursementRegister.aspx">Loan Disbursement Register</a></li>
+ <li><a href="Pre_Disbused_Emi_Collection.aspx">Pre Disbursement EMI Collection</a></li>
+<li><a href="Realisation_Status.aspx">Realisation Status</a></li>
+<li><a href="LoanRepaymentSchedule.aspx">Repayment Schedule</a></li>
+<li><a href="UploadBankStatement.aspx">Upload Other Receipts</a></li>
                               </ul>
                           </li>
+
+<li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
+                              <ul class='nav child_menu'>
+                                   <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
+                                 <li><a href="TallySyncCustomerLedger.aspx">Customer Ledger Sync</a></li>
+				 <li><a href="TallySync_Transactions.aspx">Sync Ledger Register</a></li>
+                                 
+                              </ul>
+                          </li>
+
                             </ul>
                         </div>
 

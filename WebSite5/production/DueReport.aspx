@@ -123,6 +123,7 @@
                               <ul class='nav child_menu'>
                                   <li><a href="searchLoan.aspx">Insert Cybil</a></li>
                                   <li><a href="searchLoanEdit.aspx">Edit Cybil</a></li>
+ <li><a href="UpdateCybil.aspx">Update Cybil</a></li>
                               </ul>
                           </li>
 
@@ -130,6 +131,8 @@
                               <ul class='nav child_menu'>
                                   <li><a href="Extract.aspx">Extract Cybil</a></li>
                                   <li><a href="DueReport.aspx">Due Report</a></li>
+ <li><a href="OverdueReport.aspx">Overdue Report</a></li>
+ <li><a href="ClientRegister.aspx">Client Register</a></li>
                               </ul>
                           </li>
                             <li><a><i class='fa fa-home'></i>Loan Data<span class='fa fa-chevron-down'></span> </a>

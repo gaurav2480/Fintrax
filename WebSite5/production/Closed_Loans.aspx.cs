@@ -82,7 +82,7 @@ public partial class WebSite5_production_Closed_Loans : System.Web.UI.Page
                         else
                         {
                             DATE = DATE.AddMonths(1);
-                            int loan_Debtors = Fintrax.InsertInterestLossClosed(loanNo, loanAmount, ROI, EMI, interetVal2, principalVal, installment2, DATE);
+                            int loan_Debtors = Fintrax.InsertInterestLossClosed(loanNo, loanAmount2, ROI, EMI, interetVal2, principalVal, installment2, DATE);
                             loanAmount = Math.Round(loanAmount - principalVal - interetVal, 2);
                         }
 
@@ -99,7 +99,7 @@ public partial class WebSite5_production_Closed_Loans : System.Web.UI.Page
                         else
                         {
                             DATE = DATE.AddMonths(1);
-                            int loan_Debtors = Fintrax.InsertInterestLossClosed(loanNo, loanAmount, ROI, EMI, interetVal, principalVal, installment2, DATE);
+                            int loan_Debtors = Fintrax.InsertInterestLossClosed(loanNo, loanAmount2, ROI, EMI, interetVal, principalVal, installment2, DATE);
                             loanAmount = Math.Round(loanAmount - principalVal, 2);
                         }
                     }

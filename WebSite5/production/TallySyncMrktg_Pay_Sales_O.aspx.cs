@@ -122,12 +122,12 @@ public partial class WebSite5_production_TallySyncMrktg_Pay_Sales_O : System.Web
                         xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                        xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                         xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
                         xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales-O" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
+                        xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales - Goa" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<BASICBUYERADDRESS.LIST TYPE='String'>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<BASICBUYERADDRESS>@ Haathi Mahal Mobor,Cavelossim</BASICBUYERADDRESS>\r\n";
                         xmlstc1 = xmlstc1 + "<BASICBUYERADDRESS>Salcette-Goa 403731</BASICBUYERADDRESS>\r\n";
@@ -142,7 +142,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay_Sales_O : System.Web
                 xmlstc1 = xmlstc1 + "<PLACEOFSUPPLY>Goa</PLACEOFSUPPLY>\r\n";
                 xmlstc1 = xmlstc1 + "<PARTYNAME>AXIS BANK C/C-Goa</PARTYNAME>\r\n";
                 xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>AXIS BANK C/C-Goa</PARTYLEDGERNAME>\r\n";
-                xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>Sales-O</VOUCHERTYPENAME>\r\n";
+                xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>Sales - Goa</VOUCHERTYPENAME>\r\n";
                 xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>"+""+"</VOUCHERNUMBER>\r\n";
                 xmlstc1 = xmlstc1 + "<BASICBASEPARTYNAME>AXIS BANK C/C-Goa</BASICBASEPARTYNAME>\r\n";
 
@@ -206,7 +206,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay_Sales_O : System.Web
                 xmlstc1 = xmlstc1 + "</BODY>";
                 xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";

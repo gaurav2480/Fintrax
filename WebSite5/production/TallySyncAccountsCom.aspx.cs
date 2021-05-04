@@ -192,7 +192,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
@@ -220,7 +220,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Invoice Voucher View" + "</PERSISTEDVIEW>\r\n";
                     xmlstc1 = xmlstc1 + "<CONSIGNEEGSTIN>" + "30AATFP9052E1Z5" + "</CONSIGNEEGSTIN>\r\n";
-                    xmlstc1 = xmlstc1 + "<BASICBUYERNAME>" + "Prestige Holiday Resorts LLP - (2feb2017-18)" + "</BASICBUYERNAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<BASICBUYERNAME>" + "Prestige Holiday Resorts LLP" + "</BASICBUYERNAME>\r\n";
 
                     xmlstc1 = xmlstc1 + "<CONSIGNEESTATENAME>" + "Goa" + "</CONSIGNEESTATENAME>\r\n";
                     xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "anita" + "</ENTEREDBY>\r\n";
@@ -310,7 +310,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
                      //  HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -342,7 +342,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
@@ -369,7 +369,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Invoice Voucher View" + "</PERSISTEDVIEW>\r\n";
                     xmlstc1 = xmlstc1 + "<CONSIGNEEGSTIN>" + "30AATFP9052E1Z5" + "</CONSIGNEEGSTIN>\r\n";
-                    xmlstc1 = xmlstc1 + "<BASICBUYERNAME>" + "Prestige Holiday Resorts LLP - (2feb2017-18)" + "</BASICBUYERNAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<BASICBUYERNAME>" + "Prestige Holiday Resorts LLP" + "</BASICBUYERNAME>\r\n";
 
                     xmlstc1 = xmlstc1 + "<CONSIGNEESTATENAME>" + "Goa" + "</CONSIGNEESTATENAME>\r\n";
                     xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "anita" + "</ENTEREDBY>\r\n";
@@ -446,7 +446,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
                      //HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -478,7 +478,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
@@ -565,7 +565,7 @@ public partial class WebSite5_production_TallySyncAccountsCom : System.Web.UI.Pa
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
                    // HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                     HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9091");
+                     HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc1.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";

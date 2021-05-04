@@ -114,14 +114,11 @@ text-align:center;
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  
-   
-    <link href="../vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+
 
     <!-- Custom styling plus plugins -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-    <script src="jquery-3.2.1.min.js"></script>
+  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 </head>
@@ -166,13 +163,16 @@ text-align:center;
                               <ul class='nav child_menu'>
                                   <li><a href="searchLoan.aspx">Insert Cybil</a></li>
                                   <li><a href="searchLoanEdit.aspx">Edit Cybil</a></li>
+ <li><a href="UpdateCybil.aspx">Update Cybil</a></li>
                               </ul>
                           </li>
 
                            <li><a><i class='fa fa-home'></i>Reports<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
                                   <li><a href="Extract.aspx">Extract Cybil</a></li>
-                                
+                                 <li><a href="DueReport.aspx">Due Report</a></li>
+ <li><a href="OverdueReport.aspx">Overdue Report</a></li>
+ <li><a href="ClientRegister.aspx">Client Register</a></li>
                               </ul>
                           </li>
   <li><a><i class='fa fa-home'></i>Loan Data<span class='fa fa-chevron-down'></span> </a>

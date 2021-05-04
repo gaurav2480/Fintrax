@@ -32,8 +32,9 @@ public partial class WebSite5_production_BulkReceiptTotal : System.Web.UI.Page
 
 
         DataSet ds = Fintrax.BlukReceiptTotal(fromDate,toDate);
-
-        ds.Tables[0].TableName = "TOTAL";
+	ds.Tables[0].TableName = "TIMESHARE";
+	ds.Tables[1].TableName = "FRACTIONAL";
+        ds.Tables[2].TableName = "TOTAL";
 
         using (XLWorkbook wb = new XLWorkbook())
         {

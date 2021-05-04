@@ -133,13 +133,24 @@
 <li><a href="CollectionForMonth.aspx">Collection For Month</a></li>
  <li><a href="CollectionBeforeDib.aspx">Collection Before Disbursement</a></li>
   <li><a href="LoanSanctionRegister.aspx">Loan Sanction Register</a></li>
+<li><a href="LoanDisbursementRegister.aspx">Loan Disbursement Register</a></li>
  <li><a href="Pre_Disbused_Emi_Collection.aspx">Pre Disbursement EMI Collection</a></li>
 <li><a href="Realisation_Status.aspx">Realisation Status</a></li>
 <li><a href="Closed_Loans.aspx">Interest Loss - Forclosure</a></li>
+<li><a href="RollOver.aspx">Roll Over</a></li>
+<li><a href="ProjectedInterestDetailsHisto.aspx">Historical EMI View</a></li>
+<li><a href="BulkReceiptTotal.aspx">Bulk Receipt Total</a></li>
+<li><a href="UploadBankStatement.aspx">Upload Other Receipts</a></li>
                               </ul>
                           </li>
 
-                        
+                     <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
+                              <ul class='nav child_menu'>
+                                <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
+                                 <li><a href="TallySyncCustomerLedger.aspx">Customer Ledger Sync</a></li>
+				 <li><a href="TallySync_Transactions.aspx">Sync Ledger Register</a></li>
+                              </ul>
+                          </li>   
                             </ul>
                         </div>
 

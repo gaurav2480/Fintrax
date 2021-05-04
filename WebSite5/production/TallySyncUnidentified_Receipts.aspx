@@ -124,6 +124,7 @@
                           <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
                                   <li><a href="TallySyncUnidentified_Receipts.aspx">Sync Unidentified Receipts</a></li>
+                                  <li><a href="TallySync_Invoices.aspx">Sync Invoices</a></li>
                                  
                               </ul>
                           </li>

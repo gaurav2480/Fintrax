@@ -40,21 +40,8 @@ public class Fintrax
         return connection;
     }
 
-    public static SqlConnection GetDBConnection_SalesApp()
-    {
-        // Get the connection string from the configuration file
-        string connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString_SalesApp"].ConnectionString;
 
-        // Create a new connection object
-        SqlConnection connection = new SqlConnection(connectionString);
-
-        // Open the connection, and return it
-        connection.Open();
-        return connection;
-    }
-
-
-    public static DataSet LoadCybilDetailsOnLoanNo(string loanNo)
+  public static DataSet LoadCybilDetailsOnLoanNo(string loanNo)
     {
         SqlDataAdapter da;
         DataSet ds = new DataSet();
@@ -69,23 +56,6 @@ public class Fintrax
         }
         return (ds);
     }
-
-    public static DataSet LoadCybilUpdateDetailsOnLoanNo(string loanNo)
-    {
-        SqlDataAdapter da;
-        DataSet ds = new DataSet();
-        using (SqlConnection cs1 = Fintrax.GetDBConnection())
-        {
-
-            SqlCommand SqlCmd = new SqlCommand("declare @tempTable as table (LOANNO varchar(50),DateofLastPayment varchar(50),DateClosed varchar(50),DateReported varchar(50),CurrentBalance float,ActualPaymentAmt float,DateofLastPayment2 datetime) insert into @tempTable SELECT distinct LN.LOANNO,(SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,BDS.REALISATIONDATE,103)-2,103),'','') FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment,ISNULL((SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,LCDDATE,103)-2,103),'','') FROM LOANCLOSUREDETAILS WHERE LNID = LN.LNID),'') DateClosed,REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,GETDATE(),103),103),'','') DateReported,(select top(1) lsd.LOANBALANCE from LOANSCHEDULE ls join LOANSCHEDULEDETAILS lsd on ls.LSID=lsd.LSID where LNID=LN.LNID and ls.STATUS=0 and lsd.EMISTATUS=0 order by lsd.LOANBALANCE desc) CurrentBalance ,(SELECT top(1) BDS.AMOUNT FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) ActualPaymentAmt,(SELECT TOP 1 CONVERT(DATETIME,BDS.REALISATIONDATE-2,103)FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment FROM LOANS LN,LEDGER LED,LEDGERADDRESS LADD WHERE LN.ACTIVE IN (2,0,1,3) AND LN.LEDID = LED.LEDID AND LED.LEDID = LADD.LEDID AND LN.DISBURSEMENTSTATUS =1 And LN.LOANNO=@loanNo  select *, DATEDIFF(day,t1.DateofLastPayment2 ,  GETDATE()) No_of_days_past_due from @tempTable T1", cs1);
-            SqlCmd.Parameters.Add("@loanNo", SqlDbType.VarChar).Value = loanNo;
-            da = new SqlDataAdapter(SqlCmd);
-            ds = new DataSet();
-            da.Fill(ds);
-        }
-        return (ds);
-    }
-
     public static DataSet overdue(string loanNo)
     {
         SqlDataAdapter da;
@@ -760,6 +730,7 @@ public class Fintrax
             cmd_sp.Parameters.AddWithValue("@LOANSTATUS", loanStatus);
             cmd_sp.Parameters.AddWithValue("@DISBURSEMENT", disbursmentStatus);
             cmd_sp.Parameters.AddWithValue("@count", count);
+	    
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd_sp;
             DataTable datatable = new DataTable();
@@ -875,28 +846,6 @@ public class Fintrax
     }
 
 
-    public static DataSet CrownAuditors(string fromDate, string toDate)
-    {
-
-        using (SqlConnection con = Fintrax.GetDBConnection())
-        {
-
-            SqlCommand cmd_sp = new SqlCommand("CROWNAUDITORS", con);
-
-            cmd_sp.CommandType = CommandType.StoredProcedure;
-            cmd_sp.Parameters.AddWithValue("@FROMDATE", fromDate);
-            cmd_sp.Parameters.AddWithValue("@TODATE", toDate);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd_sp;
-            DataSet datatable = new DataSet();
-            da.Fill(datatable);
-            return datatable;
-
-        }
-
-    }
-
-
     public static int InsertInterestDifference(string fromDate, string toDate)
     {
 
@@ -980,8 +929,7 @@ return datatable;
             cmd_sp.Parameters.AddWithValue("@toDate", toDate);
             cmd_sp.Parameters.AddWithValue("@status", statusValue);
             cmd_sp.Parameters.AddWithValue("@disbursement", disStatus);
-            cmd_sp.Parameters.AddWithValue("@overdueCount", overdueExCount);
-
+  	    cmd_sp.Parameters.AddWithValue("@overdueCount", overdueExCount);
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd_sp;
             DataSet datatable = new DataSet();
@@ -1017,72 +965,6 @@ return datatable;
         }
 
     }
-
-
-    public static DataTable InterestLoss_Closed(string fromDate, string toDate, string status)
-    {
-        SqlCommand cmd_sp;
-        using (SqlConnection con = Fintrax.GetDBConnection())
-        {
-           
-            cmd_sp = new SqlCommand("INTERESTLOSS_CLOSED", con);
-          
-            cmd_sp.CommandType = CommandType.StoredProcedure;
-            cmd_sp.Parameters.AddWithValue("@FROMDATE", fromDate);
-            cmd_sp.Parameters.AddWithValue("@TODATE", toDate);
-            cmd_sp.Parameters.AddWithValue("@STATUS", status);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd_sp;
-            DataTable datatable = new DataTable();
-            da.Fill(datatable);
-            return datatable;
-
-        }
-
-    }
-
-    public static DataTable getInterestLoss_Closed(string fromDate, string upToDate)
-    {
-        SqlCommand cmd;
-        using (SqlConnection con = Fintrax.GetDBConnection())
-        {
-            cmd = new SqlCommand("select LOANNO,CONVERT(VARCHAR,INSTALLMENTDATE,105) INSTALLMENTDATE,ACTUALAMOUNT, INTEREST,PRINCIPAL from INTERESTLOSS_CLOSED_TABLE where INSTALLMENTDATE between '" + fromDate + "' and '" + upToDate + "'", con);
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable ds = new DataTable();
-            sda.Fill(ds);
-            return ds;
-
-        }
-
-    }
-
-    public static int InsertInterestLossClosed(string loanNo, double loanAmount, double ROI, double EMI, double interest, double principal, int installmentNo, DateTime DATE)
-    {
-
-        int rowsAffected = 0;
-        SqlDataAdapter da = new SqlDataAdapter();
-        using (SqlConnection cs1 = Fintrax.GetDBConnection())
-        {
-            try
-            {
-
-                da.InsertCommand = new SqlCommand("insert into INTERESTLOSS_CLOSED_TABLE values('" + loanNo + "','" + loanAmount + "','" + EMI + "','" + interest + "','" + principal + "','" + installmentNo + "','" + DATE + "')", cs1);
-
-                rowsAffected = da.InsertCommand.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                string msg = "Error in Insert Schedule Query " + " " + ex.Message;
-
-                throw new Exception(msg, ex);
-
-            }
-        }
-        return (rowsAffected);
-
-    }
-
-
     public static DataTable getDebtorsDetails(string Status)
     {
         SqlCommand cmd;
@@ -1090,11 +972,11 @@ return datatable;
         {
             if (Status == "1")
             {
-                cmd = new SqlCommand("select LOANNO,CONTRACTNO ,ACTUALAMOUNT, sum(INTEREST) INTEREST,UNADJUSTED from Loan_Debtors_Details group by LOANNO, ACTUALAMOUNT,UNADJUSTED", con);
+                cmd = new SqlCommand("select LOANNO,CONTRACTNO ,ACTUALAMOUNT, sum(INTEREST) INTEREST,UNADJUSTED from Loan_Debtors_Details group by LOANNO, ACTUALAMOUNT,UNADJUSTED,CONTRACTNO", con);
             }
             else
             {
-                cmd = new SqlCommand("select LOANNO, CONTRACTNO,ACTUALAMOUNT, sum(INTEREST) INTEREST,UNADJUSTED from Loan_Debtors_Details_Open group by LOANNO, ACTUALAMOUNT,UNADJUSTED", con);
+                cmd = new SqlCommand("select LOANNO, CONTRACTNO,ACTUALAMOUNT, sum(INTEREST) INTEREST,UNADJUSTED from Loan_Debtors_Details_Open group by LOANNO, ACTUALAMOUNT,UNADJUSTED,CONTRACTNO", con);
             }
            
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -1107,11 +989,7 @@ return datatable;
     }
 
 
-   
-
-
-
-    public static int InsertScheduleDetails(string loanNo,double loanAmount,double ROI,double EMI,double interest,double principal,int installmentNo,double unadjusted,string Status,string contractNO)
+     public static int InsertScheduleDetails(string loanNo,double loanAmount,double ROI,double EMI,double interest,double principal,int installmentNo,double unadjusted,string Status,string contractNO)
     {
 
         int rowsAffected = 0;
@@ -1143,12 +1021,7 @@ return datatable;
         return (rowsAffected);
 
     }
-
-   
-
-
-
-    public static SqlDataReader LoadLoanDetailsOnCollector(string Name)
+  public static SqlDataReader LoadLoanDetailsOnCollector(string Name)
     {
         string firstdayofmonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd");
         string lastdayofmonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
@@ -1192,7 +1065,7 @@ return datatable;
 
     }
 
- public static DataSet Cancelled_Loans(string Startdate,string Enddate,string UPTODATE)
+ public static DataSet Cancelled_Loans(string Startdate,string Enddate,string UPTODATE,string disbursmentStatus)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1202,6 +1075,7 @@ return datatable;
             cmd_sp.Parameters.AddWithValue("@Startdate", Startdate);
             cmd_sp.Parameters.AddWithValue("@Enddate", Enddate);
             cmd_sp.Parameters.AddWithValue("@UPTODATE", UPTODATE);
+	    cmd_sp.Parameters.AddWithValue("@STATUS", disbursmentStatus);
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd_sp;
             DataSet datatable = new DataSet();
@@ -1274,52 +1148,7 @@ return datatable;
 
     }
 
-
-    public static DataSet LOANSANCTIONREGISTER(string startDate, string endDate)
-    {
-
-        using (SqlConnection con = Fintrax.GetDBConnection())
-        {
-
-            SqlCommand cmd_sp = new SqlCommand("[LOANSANCTIONREGISTER]", con);
-
-            cmd_sp.CommandType = CommandType.StoredProcedure;
-            cmd_sp.Parameters.AddWithValue("@FROMDATE", startDate);
-            cmd_sp.Parameters.AddWithValue("@TODATE", endDate);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd_sp;
-            DataSet datatable = new DataSet();
-            da.Fill(datatable);
-            return datatable;
-
-        }
-
-    }
-
-
-    public static DataSet Pre_Disbused_Emi_Collection(string startDate, string endDate)
-    {
-
-        using (SqlConnection con = Fintrax.GetDBConnection())
-        {
-
-            SqlCommand cmd_sp = new SqlCommand("[PRE_DISBURSEMENT_EMI_COLLECTION]", con);
-
-            cmd_sp.CommandType = CommandType.StoredProcedure;
-            cmd_sp.Parameters.AddWithValue("@FROMDATE", startDate);
-            cmd_sp.Parameters.AddWithValue("@TODATE", endDate);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd_sp;
-            DataSet datatable = new DataSet();
-            da.Fill(datatable);
-            return datatable;
-
-        }
-
-    }
-
-
-    public static DataSet collectionForMonth_Rows(string startDate, string endDate)
+  public static DataSet collectionForMonth_Rows(string startDate, string endDate)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1340,30 +1169,8 @@ return datatable;
 
     }
 
-    public static DataSet DSR_Tally_Report(string startDate, string endDate)
-    {
 
-        using (SqlConnection con = Fintrax.GetDBConnection_SalesApp())
-        {
-
-            SqlCommand cmd_sp = new SqlCommand("[DSR_Tally_Sync]", con);
-
-            cmd_sp.CommandType = CommandType.StoredProcedure;
-            cmd_sp.Parameters.AddWithValue("@startDate", startDate);
-            cmd_sp.Parameters.AddWithValue("@endDate", endDate);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd_sp;
-            DataSet datatable = new DataSet();
-            da.Fill(datatable);
-            return datatable;
-
-        }
-
-    }
-
-
-
-    public static DataSet ProjectedInterestDetailsReport_Summary(string fromDate, string toDate, string statusValue, string disStatus,string US)
+ public static DataSet ProjectedInterestDetailsReport_Summary(string fromDate, string toDate, string statusValue, string disStatus,string US)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1386,7 +1193,7 @@ return datatable;
 
     }
 
-   public static DataSet OVERDUE_WITH_SUMMARY_ASOFTODAY(string statusValue, string disStatus,string US)
+  public static DataSet OVERDUE_WITH_SUMMARY_ASOFTODAY(string statusValue, string disStatus,string US)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1407,16 +1214,60 @@ return datatable;
 
     }
 
-    public static DataTable LoanRepaymentSchedule(string LOANNO)
+   public static DataSet LOANSANCTIONREGISTER(string startDate, string endDate)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
         {
 
-            SqlCommand cmd_sp = new SqlCommand("LOANREPAYMANTSCHEDULE", con);
+            SqlCommand cmd_sp = new SqlCommand("[LOANSANCTIONREGISTER]", con);
 
             cmd_sp.CommandType = CommandType.StoredProcedure;
-            cmd_sp.Parameters.AddWithValue("@LOANNO", LOANNO);
+            cmd_sp.Parameters.AddWithValue("@FROMDATE", startDate);
+            cmd_sp.Parameters.AddWithValue("@TODATE", endDate);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd_sp;
+            DataSet datatable = new DataSet();
+            da.Fill(datatable);
+            return datatable;
+
+        }
+
+    }
+
+  public static DataSet Pre_Disbused_Emi_Collection(string startDate, string endDate)
+    {
+
+        using (SqlConnection con = Fintrax.GetDBConnection())
+        {
+
+            SqlCommand cmd_sp = new SqlCommand("[PRE_DISBURSEMENT_EMI_COLLECTION]", con);
+
+            cmd_sp.CommandType = CommandType.StoredProcedure;
+            cmd_sp.Parameters.AddWithValue("@FROMDATE", startDate);
+            cmd_sp.Parameters.AddWithValue("@TODATE", endDate);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd_sp;
+            DataSet datatable = new DataSet();
+            da.Fill(datatable);
+            return datatable;
+
+        }
+
+    }
+
+    public static DataTable InterestLoss_Closed(string fromDate, string toDate, string status)
+    {
+        SqlCommand cmd_sp;
+        using (SqlConnection con = Fintrax.GetDBConnection())
+        {
+           
+            cmd_sp = new SqlCommand("INTERESTLOSS_CLOSED", con);
+          
+            cmd_sp.CommandType = CommandType.StoredProcedure;
+            cmd_sp.Parameters.AddWithValue("@FROMDATE", fromDate);
+            cmd_sp.Parameters.AddWithValue("@TODATE", toDate);
+            cmd_sp.Parameters.AddWithValue("@STATUS", status);
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd_sp;
             DataTable datatable = new DataTable();
@@ -1424,9 +1275,51 @@ return datatable;
             return datatable;
 
         }
+
     }
 
-    public static DataSet rollOver(string fromDate, string toDate)
+    public static DataTable getInterestLoss_Closed(string fromDate, string upToDate)
+    {
+        SqlCommand cmd;
+        using (SqlConnection con = Fintrax.GetDBConnection())
+        {
+            cmd = new SqlCommand("select LOANNO,CONVERT(VARCHAR,INSTALLMENTDATE,105)INSTALLMENTDATE,ACTUALAMOUNT, INTEREST,PRINCIPAL from INTERESTLOSS_CLOSED_TABLE where INSTALLMENTDATE between '" + fromDate + "' and '" + upToDate + "'", con);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            sda.Fill(ds);
+            return ds;
+
+        }
+
+    }
+
+    public static int InsertInterestLossClosed(string loanNo, double loanAmount, double ROI, double EMI, double interest, double principal, int installmentNo, DateTime DATE)
+    {
+
+        int rowsAffected = 0;
+        SqlDataAdapter da = new SqlDataAdapter();
+        using (SqlConnection cs1 = Fintrax.GetDBConnection())
+        {
+            try
+            {
+
+                da.InsertCommand = new SqlCommand("insert into INTERESTLOSS_CLOSED_TABLE values('" + loanNo + "','" + loanAmount + "','" + EMI + "','" + interest + "','" + principal + "','" + installmentNo + "','" + DATE + "')", cs1);
+
+                rowsAffected = da.InsertCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                string msg = "Error in Insert Schedule Query " + " " + ex.Message;
+
+                throw new Exception(msg, ex);
+
+            }
+        }
+        return (rowsAffected);
+
+    }
+
+   public static DataSet rollOver(string fromDate, string toDate)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1447,8 +1340,7 @@ return datatable;
 
     }
 
-
-    public static DataSet DueReport(string fromDate, string toDate)
+  public static DataSet DueReport(string fromDate, string toDate)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1469,8 +1361,7 @@ return datatable;
 
     }
 
-
-    public static DataSet overdueReport()
+ public static DataSet overdueReport()
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1489,8 +1380,7 @@ return datatable;
 
     }
 
-
-    public static DataSet ProjectedInterestDetail_Histo(string fromDate, string toDate, string disStatus)
+  public static DataSet ProjectedInterestDetail_Histo(string fromDate, string toDate, string disStatus)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1532,7 +1422,7 @@ return datatable;
 
     }
 
-    public static DataSet BlukReceiptTotal(string fromDate, string toDate)
+ public static DataSet BlukReceiptTotal(string fromDate, string toDate)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1553,8 +1443,42 @@ return datatable;
 
     }
 
+public static DataTable LoanRepaymentSchedule(string LOANNO)
+    {
 
-    public static DataSet GSTIN_Details(string name)
+        using (SqlConnection con = Fintrax.GetDBConnection())
+        {
+
+            SqlCommand cmd_sp = new SqlCommand("LOANREPAYMANTSCHEDULE", con);
+
+            cmd_sp.CommandType = CommandType.StoredProcedure;
+            cmd_sp.Parameters.AddWithValue("@LOANNO", LOANNO);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd_sp;
+            DataTable datatable = new DataTable();
+            da.Fill(datatable);
+            return datatable;
+
+        }
+    }
+
+
+ public static DataSet LoadCybilUpdateDetailsOnLoanNo(string loanNo)
+    {
+        SqlDataAdapter da;
+        DataSet ds = new DataSet();
+        using (SqlConnection cs1 = Fintrax.GetDBConnection())
+        {
+
+            SqlCommand SqlCmd = new SqlCommand("declare @tempTable as table (LOANNO varchar(50),DateofLastPayment varchar(50),DateClosed varchar(50),DateReported varchar(50),CurrentBalance float,ActualPaymentAmt float,DateofLastPayment2 datetime) insert into @tempTable SELECT distinct LN.LOANNO,(SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,BDS.REALISATIONDATE,103)-2,103),'','') FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment,ISNULL((SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,LCDDATE,103)-2,103),'','') FROM LOANCLOSUREDETAILS WHERE LNID = LN.LNID),'') DateClosed,REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,GETDATE(),103),103),'','') DateReported,(select top(1) lsd.LOANBALANCE from LOANSCHEDULE ls join LOANSCHEDULEDETAILS lsd on ls.LSID=lsd.LSID where LNID=LN.LNID and ls.STATUS=0 and lsd.EMISTATUS=0 order by lsd.LOANBALANCE desc) CurrentBalance ,(SELECT top(1) BDS.AMOUNT FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.            LNID ORDER BY BDS.REALISATIONDATE DESC) ActualPaymentAmt,(SELECT TOP 1 CONVERT(DATETIME,BDS.REALISATIONDATE-2,103)FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment FROM LOANS LN,LEDGER LED,LEDGERADDRESS LADD WHERE LN.ACTIVE IN (2,0,1,3) AND LN.LEDID = LED.LEDID AND LED.LEDID = LADD.LEDID AND LN.DISBURSEMENTSTATUS =1 And LN.LOANNO=@loanNo  select *, DATEDIFF(day,t1.DateofLastPayment2 ,  GETDATE()) No_of_days_past_due from @tempTable T1", cs1);
+            SqlCmd.Parameters.Add("@loanNo", SqlDbType.VarChar).Value = loanNo;
+            da = new SqlDataAdapter(SqlCmd);
+            ds = new DataSet();
+            da.Fill(ds);
+        }
+        return (ds);
+    }
+public static DataSet GSTIN_Details(string name)
     {
 
         using (SqlConnection con = Fintrax.GetDBConnection())
@@ -1573,6 +1497,24 @@ return datatable;
 
     }
 
+ public static DataSet LOANDISBURSEMENTREGISTER(string startDate, string endDate)
+    {
 
+        using (SqlConnection con = Fintrax.GetDBConnection())
+        {
 
+            SqlCommand cmd_sp = new SqlCommand("[LOAN_DISBURSEMENT_REGISTER]", con);
+
+            cmd_sp.CommandType = CommandType.StoredProcedure;
+            cmd_sp.Parameters.AddWithValue("@STARTDATE", startDate);
+            cmd_sp.Parameters.AddWithValue("@ENDDATE", endDate);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd_sp;
+            DataSet datatable = new DataSet();
+            da.Fill(datatable);
+            return datatable;
+
+        }
+
+    }
 }

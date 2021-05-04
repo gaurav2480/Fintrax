@@ -227,7 +227,7 @@ public partial class WebSite5_production_cybil : System.Web.UI.Page
             DataSet state = Fintrax.LoadStateCode(Session["State"].ToString());
             state1.DataSource = state;
             state1.DataTextField = "Values";
-            state1.DataValueField = "AlpValues";
+            state1.DataValueField = "Code";
             state1.AppendDataBoundItems = true;
             state1.Items.Insert(0, new ListItem(Session["State"].ToString(), ""));
             state1.DataBind();
@@ -256,7 +256,7 @@ public partial class WebSite5_production_cybil : System.Web.UI.Page
             DataSet states2 = Fintrax.LoadStateCode(Session["StateCode2"].ToString());
             state2.DataSource = states2;
             state2.DataTextField = "Values";
-            state2.DataValueField = "AlpValues";
+            state2.DataValueField = "Code";
             state2.AppendDataBoundItems = true;
             state2.Items.Insert(0, new ListItem(Session["StateCode2"].ToString(), ""));
             state2.DataBind();

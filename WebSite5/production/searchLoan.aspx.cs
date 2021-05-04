@@ -174,7 +174,7 @@ public partial class WebSite5_production_searchLoan : System.Web.UI.Page
            string JSON = "{\n \"names\":[";
            SqlConnection sqlcon1 = new SqlConnection(conn);
 
-           string query1 = "select LoanNo from cybil where LoanNo='"+loanNo+"'";
+           string query1 = "select top(200) LoanNo from cybil where LoanNo='"+loanNo+"'";
            sqlcon1.Open();
            SqlCommand cmd1 = new SqlCommand(query1, sqlcon1);
            SqlDataReader reader1 = cmd1.ExecuteReader();

@@ -123,8 +123,8 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                 if (contractType== "")
                 {
 
-                }
-                else if (profile_Venue== "Karma Discovery")
+                }  
+		else if (profile_Venue== "Karma Discovery")
                 {
                     ledgerType = "Open Contracts Pts (3yrs)";
                     ledgerGroup = "Karma Discovery";
@@ -138,7 +138,7 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc = xmlstc + "<REQUESTDESC>" + "\r\n";
                     xmlstc = xmlstc + "<REPORTNAME>All Masters</REPORTNAME>" + "\r\n";
                     xmlstc = xmlstc + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc = xmlstc + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                    xmlstc = xmlstc + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                     xmlstc = xmlstc + "</STATICVARIABLES>" + "\r\n";
                     xmlstc = xmlstc + "</REQUESTDESC>" + "\r\n";
                     xmlstc = xmlstc + "<REQUESTDATA>" + "\r\n";
@@ -171,8 +171,8 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc = xmlstc + "</ENVELOPE>";
 
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    //  HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
+                   // HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                     HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -198,17 +198,17 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Journal" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
+                    xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Journal - Goa" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
 
                     xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                     xmlstc1 = xmlstc1 + "<NARRATION>" + name + "</NARRATION>\r\n";
                     xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>"+contractNo+"</PARTYLEDGERNAME>\r\n";
-                    xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>Journal</VOUCHERTYPENAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>Journal - Goa</VOUCHERTYPENAME>\r\n";
                     xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
                     xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Accounting Voucher View" + "</PERSISTEDVIEW>\r\n";
@@ -299,8 +299,8 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    //HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
+                   // HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                     httpWebRequest.Method = "POST";
                     httpWebRequest.ContentLength = xmlstc1.Length;
                     httpWebRequest.ContentType = "application/x-www-form-urlencoded";
@@ -357,7 +357,7 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc = xmlstc + "<REQUESTDESC>" + "\r\n";
                     xmlstc = xmlstc + "<REPORTNAME>All Masters</REPORTNAME>" + "\r\n";
                     xmlstc = xmlstc + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc = xmlstc + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                    xmlstc = xmlstc + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                     xmlstc = xmlstc + "</STATICVARIABLES>" + "\r\n";
                     xmlstc = xmlstc + "</REQUESTDESC>" + "\r\n";
                     xmlstc = xmlstc + "<REQUESTDATA>" + "\r\n";
@@ -390,8 +390,8 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc = xmlstc + "</ENVELOPE>";
 
 
-                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    //  HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
+                  //  HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                     httpWebRequest1.Method = "POST";
                     httpWebRequest1.ContentLength = xmlstc.Length;
                     httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -417,17 +417,17 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                    xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
                     xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                     xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
-                    xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Journal" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
+                    xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Journal - Goa" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
 
                     xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
                     xmlstc1 = xmlstc1 + "<NARRATION>" + name + "</NARRATION>\r\n";
                     xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>"+contractNo+"</PARTYLEDGERNAME>\r\n";
-                    xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>Journal</VOUCHERTYPENAME>\r\n";
+                    xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>Journal - Goa</VOUCHERTYPENAME>\r\n";
                     xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
                     xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
                     xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Accounting Voucher View" + "</PERSISTEDVIEW>\r\n";
@@ -518,8 +518,8 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
                     xmlstc1 = xmlstc1 + "</BODY>";
                     xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                    //HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9029");
+                   // HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                     httpWebRequest.Method = "POST";
                     httpWebRequest.ContentLength = xmlstc1.Length;
                     httpWebRequest.ContentType = "application/x-www-form-urlencoded";
@@ -632,7 +632,7 @@ public partial class WebSite5_production_TallySync_DSR : System.Web.UI.Page
 
                 }else
                 {
-                    string InsertQuery = "Insert into Tally_Sync_DSR values('" + row["ContractNo"] + "','" + row["Pan_Card"] + "','" + row["pname"] + "','" + row["ContractType"] + "','" + row["Profile_Venue"] + "','" + row["Finance_Details"] + "','" + row["Total_Purchase_Price"] + "','" + row["CGST"] + "','" + row["SGST"] + "','" + row["Total_Price_Including_Tax"] + "','Active','"+ row["Date"] + "')";
+                    string InsertQuery = "Insert into Tally_Sync_DSR values('" + row["ContractNo"] + "','" + row["Pan_Card"] + "','" + row["pname"] + "','" + row["ContractType"] + "','" + row["Profile_Venue"] + "','" + row["Finance_Details"] + "','" + row["Total_Purchase_Price"] + "','" + row["CGST"].ToString() + "','" + row["SGST"].ToString() + "','" + row["Total_Price_Including_Tax"].ToString() + "','Active','"+ row["Date"] + "')";
                     SqlCommand cmd = new SqlCommand(InsertQuery, sqlcon);
                     cmd.ExecuteNonQuery();
                         

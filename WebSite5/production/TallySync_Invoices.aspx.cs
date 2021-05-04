@@ -27,7 +27,7 @@ public partial class WebSite5_production_TallySync_Invoices : System.Web.UI.Page
         string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
         SqlConnection sqlcon = new SqlConnection(conn);
         string JSON = "{\n \"names\":[";
-        string query = "select distinct Type from Invoices_Sync  where  status='Active';";
+        string query = "select distinct Type from Invoices_Sync  where  status='Active' and Collection_Amount>0;";
         sqlcon.Open();
         SqlCommand cmd = new SqlCommand(query, sqlcon);
         SqlDataReader reader = cmd.ExecuteReader();

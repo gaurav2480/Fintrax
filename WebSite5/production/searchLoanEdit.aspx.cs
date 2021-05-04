@@ -185,7 +185,7 @@ public partial class WebSite5_production_searchLoanEdit : System.Web.UI.Page
                 string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
                 SqlConnection sqlcon = new SqlConnection(conn);
 
-                string query = "select distinct LoanNo,[Consumer Name],[Telephone No#Mobile],[Email ID 1] from Cybil where loanNo like '" + loanNo + "%'";
+                string query = "select distinct top(200) LoanNo,[Consumer Name],[Telephone No#Mobile],[Email ID 1] from Cybil where loanNo like '" + loanNo + "%'";
                 sqlcon.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlcon);
                 SqlDataReader reader = cmd.ExecuteReader();

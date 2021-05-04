@@ -133,6 +133,7 @@
 <li><a href="CollectionForMonth.aspx">Collection For Month</a></li>
  <li><a href="CollectionBeforeDib.aspx">Collection Before Disbursement</a></li>
 <li><a href="LoanSanctionRegister.aspx">Loan Sanction Register</a></li>
+<li><a href="LoanDisbursementRegister.aspx">Loan Disbursement Register</a></li>
  <li><a href="Pre_Disbused_Emi_Collection.aspx">Pre Disbursement EMI Collection</a></li>
 <li><a href="Realisation_Status.aspx">Realisation Status</a></li>
 <li><a href="Closed_Loans.aspx">Interest Loss - Forclosure</a></li>

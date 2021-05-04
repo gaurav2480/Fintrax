@@ -8,10 +8,9 @@ using System.Data.SqlClient;
 using System.Web.Services;
 using System.Configuration;
 using System.Data;
-using ClosedXML.Excel;
 using System.IO;
-
-public partial class WebSite5_production_DSR_Tally_Sync_Report : System.Web.UI.Page
+using ClosedXML.Excel;
+public partial class WebSite5_production_LoanDisbursementRegister : System.Web.UI.Page
 {
 
 
@@ -24,18 +23,14 @@ public partial class WebSite5_production_DSR_Tally_Sync_Report : System.Web.UI.P
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        DataSet ds;
         string startDate = Request.Form["startDate"];
         string endDate = Request.Form["endDate"];
-      
-
-            ds = Fintrax.DSR_Tally_Report(startDate, endDate);
-      
-
-
-           ds.Tables[0].TableName = "Data";
-
         
+        DataSet ds = Fintrax.LOANDISBURSEMENTREGISTER(startDate, endDate);
+
+        ds.Tables[0].TableName = "WITHOUT REFINANCE";
+        ds.Tables[1].TableName = "WITH REFINANCE";
+
         using (XLWorkbook wb = new XLWorkbook())
         {
             foreach (DataTable dt in ds.Tables)
@@ -49,9 +44,7 @@ public partial class WebSite5_production_DSR_Tally_Sync_Report : System.Web.UI.P
             Response.Buffer = true;
             Response.Charset = "";
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-            Response.AddHeader("content-disposition", "attachment;filename=DSR_TALLY_Report.xlsx");
-          
+            Response.AddHeader("content-disposition", "attachment;filename=LOANDISBURSEMENTREGISTER.xlsx");
             using (MemoryStream MyMemoryStream = new MemoryStream())
             {
                 wb.SaveAs(MyMemoryStream);

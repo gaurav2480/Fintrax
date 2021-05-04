@@ -145,17 +145,17 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                         xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP - (2feb2017-18)</SVCURRENTCOMPANY>" + "\r\n";
+                        xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
                         xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
                         xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Receipt" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
+                        xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Receipt - Goa" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
                         xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
 
                         xmlstc1 = xmlstc1 + "<NARRATION>" + narration + "</NARRATION>\r\n";
                         xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + bankName + "</PARTYLEDGERNAME>\r\n";
-                        xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Receipt" + "</VOUCHERTYPENAME>\r\n";
+                        xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Receipt - Goa" + "</VOUCHERTYPENAME>\r\n";
                         // xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
                         xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
                         xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
@@ -203,7 +203,7 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://192.168.0.9:" + "9031");
+                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";

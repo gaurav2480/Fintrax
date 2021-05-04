@@ -20,7 +20,7 @@
     <style>
 
           #sidebar-menu{
-         position: fixed;
+       
          width: 230px;
          margin-top:70px;
         }
@@ -119,23 +119,36 @@
 
                             <h3>MENU</h3>
                           <ul class="nav side-menu">
-                          <li><a><i class='fa fa-home'></i>Cybil<span class='fa fa-chevron-down'></span> </a>
+                          <li><a><i class='fa fa-home'></i>Reports<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="searchLoan.aspx">Insert Cybil</a></li>
-                                  <li><a href="searchLoanEdit.aspx">Edit Cybil</a></li>
+                                  <li><a href="AdvanceEmi.aspx">Advance Emi</a></li>
+                                  <li><a href="LastRowPaidOfClosedLoans.aspx">Additional Capital</a></li>
+                                  <li><a href="Overdue_Historical.aspx">Overdue Historical</a></li>
+                                  <li><a href="Interest_Waiver.aspx">Interest Loss - Waiver</a></li>
+
+				  <li><a href="ProjectedInterestDetails.aspx">Projected Interest Details</a></li>
+                                  <li><a href="Loan_Debtors.aspx">Loan Debtors</a></li>
+                                 <li><a href="Cancelled_Loans.aspx">Interest Loss - Cancelled</a></li>
+<li><a href="loanDueForDis.aspx">Loan Due For Disbursement</a></li>
+<li><a href="CollectionForMonth.aspx">Collection For Month</a></li>
+ <li><a href="CollectionBeforeDib.aspx">Collection Before Disbursement</a></li>
+<li><a href="LoanSanctionRegister.aspx">Loan Sanction Register</a></li>
+<li><a href="LoanDisbursementRegister.aspx">Loan Disbursement Register</a></li>
+ <li><a href="Pre_Disbused_Emi_Collection.aspx">Pre Disbursement EMI Collection</a></li>
+<li><a href="Realisation_Status.aspx">Realisation Status</a></li>
+<li><a href="Closed_Loans.aspx">Interest Loss - Forclosure</a></li>
+<li><a href="RollOver.aspx">Roll Over</a></li>
+<li><a href="ProjectedInterestDetailsHisto.aspx">Historical EMI View</a></li>
+<li><a href="BulkReceiptTotal.aspx">Bulk Receipt Total</a></li>
                               </ul>
                           </li>
 
-                           <li><a><i class='fa fa-home'></i>Reports<span class='fa fa-chevron-down'></span> </a>
+<li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="Extract.aspx">Extract Cybil</a></li>
-                                  <li><a href="DueReport.aspx">Due Report</a></li>
-                              </ul>
-                          </li>
-                            <li><a><i class='fa fa-home'></i>Loan Data<span class='fa fa-chevron-down'></span> </a>
-                              <ul class='nav child_menu'>
-                                  <li><a href="DataOnCollector.aspx">Collector Wise</a></li>
-                                
+                              <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
+                                 <li><a href="TallySyncCustomerLedger.aspx">Customer Ledger Sync</a></li>
+				 <li><a href="TallySync_Transactions.aspx">Sync Ledger Register</a></li>
+                                 
                               </ul>
                           </li>
                       </ul>
@@ -231,7 +244,7 @@
 
                                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " id="head">
                                               <br />
-                                              <h3 class="text-center">DUE REPORT</h3>
+                                              <h3 class="text-center">BULK RECEIPT TOTAL REPORT</h3>
                                           </div>
                                       </div>
                                   </div>

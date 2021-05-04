@@ -37,7 +37,7 @@ public partial class WebSite5_production_LoanRepaymentSchedule : System.Web.UI.P
         ExportFormatType formatType = ExportFormatType.NoFormat;
         formatType = ExportFormatType.PortableDocFormat;
         crystalReport.ExportToHttpResponse(formatType, Response, true, loanNos);
-        Response.Flush();
+ Response.Flush();
         Response.End();
 
 

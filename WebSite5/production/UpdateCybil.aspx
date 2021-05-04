@@ -123,6 +123,7 @@
                               <ul class='nav child_menu'>
                                   <li><a href="searchLoan.aspx">Insert Cybil</a></li>
                                   <li><a href="searchLoanEdit.aspx">Edit Cybil</a></li>
+				  <li><a href="UpdateCybil.aspx">Update Cybil</a></li>
                               </ul>
                           </li>
 

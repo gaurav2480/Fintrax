@@ -26,7 +26,7 @@ public partial class WebSite5_production_mail_sending : System.Web.UI.Page
         {
             string to = "gauravdessai18@gmail.com"; //To address    
             string from = "gauravdessai18@gmail.com"; //From address    
-            MailMessage message = new MailMessage(from, to, "<p>Fintrax", "HELLO GAURAV, Please check the attached file</p>");
+            MailMessage message = new MailMessage(from, to, "Fintrax", "HELLO GAURAV, Please check the attached file");
             message.IsBodyHtml = true;
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
             client.EnableSsl = true;

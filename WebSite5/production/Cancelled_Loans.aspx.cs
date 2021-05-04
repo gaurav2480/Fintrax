@@ -29,11 +29,13 @@ public partial class WebSite5_production_Cancelled_Loans : System.Web.UI.Page
         string Startdate = Request.Form["startdate"];
         string Enddate = Request.Form["enddate"];
         string UPTODATE = Request.Form["UPTODATE"];
+	string disbursmentStatus = Request.Form["disbursmentStatus"];
 
-        DataSet ds = Fintrax.Cancelled_Loans(Startdate,Enddate, UPTODATE);
 
-        ds.Tables[0].TableName = "SCHEDULE BEFORE CANCELLED";
-        ds.Tables[1].TableName = "SCHEDULE AFTER CANCELLED";
+        DataSet ds = Fintrax.Cancelled_Loans(Startdate,Enddate, UPTODATE,disbursmentStatus);
+
+   ds.Tables[0].TableName = "Interest recognised";
+        ds.Tables[1].TableName = "Interest not recognised";
 
 
         using (XLWorkbook wb = new XLWorkbook())

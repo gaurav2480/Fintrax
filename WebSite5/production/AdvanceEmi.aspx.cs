@@ -35,16 +35,11 @@ public partial class WebSite5_production_AdvanceEmi : System.Web.UI.Page
 
         using (XLWorkbook wb = new XLWorkbook())
         {
-         
             foreach (DataTable dt in ds.Tables)
             {
                 //Add DataTable as Worksheet.
                 wb.Worksheets.Add(dt);
-               
-                
-              
             }
-         
 
             //Export the Excel file.
             Response.Clear();

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="WebSite5_production_Default" validateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="WebSite5_production_Default" %>
 
 <!DOCTYPE html>
 
@@ -8,12 +8,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
- 
-  
-        <p>
-            <% Response.Write(data()); %>
-        </p>
-
+    <div>
+    
+    </div>
     </form>
 </body>
 </html>

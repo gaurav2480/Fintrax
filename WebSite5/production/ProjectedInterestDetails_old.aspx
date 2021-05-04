@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DSR_Tally_Sync_Report.aspx.cs" Inherits="WebSite5_production_DSR_Tally_Sync_Report" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProjectedInterestDetails.aspx.cs" Inherits="WebSite5_production_ProjectedInterestDetails" %>
 
 <!DOCTYPE html>
 
@@ -20,7 +20,7 @@
     <style>
 
           #sidebar-menu{
-         position: fixed;
+        
          width: 230px;
          margin-top:70px;
         }
@@ -90,7 +90,7 @@
            <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border-bottom: 2px; height:auto; color: #172D44;" id="img">
 
-                          <img src="../production/images/KSC1.png" class="img-square" alt="" style="margin-top:3px; margin-bottom:5px;" width="200" height="53"/><br />
+                          <!-- <img src="../production/images/KSC1.png" class="img-square" alt="" style="margin-top:3px; margin-bottom:5px;" width="200" height="53"/><br />-->
                       
                      <!-- <span style="opacity: 0.5; font-size:16px; margin-bottom:150px; font-style:oblique; font-family:'Bookman Old Style'; color:#FCDE97">Karma Group</span>-->
                     </div>
@@ -121,21 +121,33 @@
                             <ul class="nav side-menu">
                             <li><a><i class='fa fa-home'></i>Reports<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                   <li><a href="DSR_Tally_Sync_Report.aspx">DSR To Tally Report</a></li>
+                                  <li><a href="AdvanceEmi.aspx">Advance Emi</a></li>
+                                  <li><a href="LastRowPaidOfClosedLoans.aspx">Additional Capital</a></li>
+                                  <li><a href="Overdue_Historical.aspx">Overdue Historical</a></li>
+                                  <li><a href="Interest_Waiver.aspx">Interest Loss - Waiver</a></li>
+                                  <li><a href="previousCurrentSchedule.aspx">Interest Loss - Closed</a></li>
+				  <li><a href="ProjectedInterestDetails.aspx">Projected Interest Details</a></li>
+                                  <li><a href="Loan_Debtors.aspx">Loan Debtors</a></li>
+                                 <li><a href="Cancelled_Loans.aspx">Interest Loss - Cancelled</a></li>
+<li><a href="loanDueForDis.aspx">Loan Due For Disbursement</a></li>
+<li><a href="CollectionForMonth.aspx">Collection For Month</a></li>
+ <li><a href="CollectionBeforeDib.aspx">Collection Before Disbursement</a></li>
+  <li><a href="LoanSanctionRegister.aspx">Loan Sanction Register</a></li>
+ <li><a href="Pre_Disbused_Emi_Collection.aspx">Pre Disbursement EMI Collection</a></li>
+<li><a href="Closed_Loans.aspx">Interest Loss - Closed</a></li>
+<li><a href="ProjectedInterestDetailsHisto.aspx">Historical EMI View</a></li>
+<li><a href="BulkReceiptTotal.aspx">Bulk Receipt Total</a></li>
+<li><a href="UploadBankStatement.aspx">Upload Other Receipts</a></li>
                               </ul>
                           </li>
 
-                                   <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
+                        <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="TallySyncMrktg_Pay.aspx">Sync Transmittal Sales Voucher</a></li>
-                                  <li><a href="TallySyncMrktg_Pay.aspx">Sync Call Center Sales Voucher</a></li>
-                                   <li><a href="TallySyncMrktg_Pay_Sales_O_CC_Avenue.aspx">Sync Call Center Sales Voucher CC Avenue</a></li>
-                                  <li><a href="TallySync_DSR.aspx">DSR To Tally Sync</a></li>
+                          <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
+                                 <li><a href="TallySyncCustomerLedger.aspx">Customer Ledger Sync</a></li>
+				 <li><a href="TallySync_Transactions.aspx">Sync Ledger Register</a></li>
                               </ul>
                           </li>
-
-
-                        
                             </ul>
                         </div>
 
@@ -176,7 +188,7 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
-                <li class="">
+                <%--<li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                      <!--<img src="images/img.jpg" alt=""/>-->
                     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
@@ -188,7 +200,7 @@
                      <li><a href="#addEmployeeModal" data-toggle="modal">Setting</a></li>
                     <li><a href="logout.aspx"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
-                </li>
+                </li>--%>
                    <li class="">
                      <%-- <div class="main">
                           <div class="form-group has-feedback has-search">
@@ -225,7 +237,7 @@
 
                                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " id="head">
                                                    <br />
-                                                   <h3 class="text-center">DSR TALLY SYNC REPORT </h3>
+                                                   <h3 class="text-center">FORECLOSURE CAPITAL</h3>
                                                </div>
                                            </div>
                                        </div>
@@ -236,7 +248,7 @@
                                                <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3" id="">
                                                    <label for="sel1">From Date:</label>
                                                    <div class="input-group date" id="datepicker1" data-provide="datepicker">
-                                                       <asp:TextBox ID="startDate" class="form-control pull-right" runat="server"></asp:TextBox>
+                                                       <asp:TextBox ID="fromDate" class="form-control pull-right" runat="server"></asp:TextBox>
                                                        <div class="input-group-addon">
                                                            <span class="glyphicon glyphicon-th"></span>
                                                        </div>
@@ -249,7 +261,7 @@
                                                <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3" id="">
                                                    <label for="sel1">To Date:</label>
                                                    <div class="input-group date" id="datepicker2" data-provide="datepicker">
-                                                       <asp:TextBox ID="endDate" class="form-control pull-right" runat="server"></asp:TextBox>
+                                                       <asp:TextBox ID="toDate" class="form-control pull-right" runat="server"></asp:TextBox>
                                                        <div class="input-group-addon">
                                                            <span class="glyphicon glyphicon-th"></span>
                                                        </div>
@@ -259,7 +271,38 @@
 
                                            </div>
 
-                                          
+                                             <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-12 col-lg-3" id="">
+                                              <div class="form-group">
+                                                  <label for="sel1">Status:</label>
+                                                  <select class="form-control" name="status" runat="server" id="status" >
+                                                      <option disabled selected value>Select an Option</option>
+                                                       <option value="5">Active/Reschedule Due</option>
+                                                       <option value="0">Active</option>
+                                                       <option value="1">Closed</option>
+                                                       <option value="2">Cancelled</option>
+                                                       <option value="3">Reschedule Due</option>
+                                                      
+                                                  </select>
+                                              </div>
+                                          </div>
+
+                                      </div>
+
+                                            <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-12 col-lg-3" id="">
+                                              <div class="form-group">
+                                                  <label for="sel1">Disbursemnet Status:</label>
+                                                  <select class="form-control" name="disStatus" runat="server" id="disStatus" >
+                                                      <option disabled selected value>Select an Option</option>
+                                                      <option value="1">Yes</option>
+                                                       <option value="0">No</option>
+                                                        <option value="5">Both</option>
+                                                  </select>
+                                              </div>
+                                          </div>
+
+                                      </div>
 
 
                                            <div class="row">

@@ -164,7 +164,7 @@ dir.Create();
                 xmlstc = xmlstc + "</BODY>";
                 xmlstc = xmlstc + "</ENVELOPE>";
 
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                 httpWebRequest.Method = "POST";
                 httpWebRequest.ContentLength = xmlstc.Length;
                 httpWebRequest.ContentType = "application/x-www-form-urlencoded";
@@ -345,7 +345,7 @@ dir.Create();
                 DateTime date =  DateTime.Now;
                        
 
-                HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9028");
+                HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                 httpWebRequest1.Method = "POST";
                 httpWebRequest1.ContentLength = xmlstc1.Length;
                 httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
