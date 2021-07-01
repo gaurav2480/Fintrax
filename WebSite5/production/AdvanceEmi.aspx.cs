@@ -31,7 +31,7 @@ public partial class WebSite5_production_AdvanceEmi : System.Web.UI.Page
 
         DataSet ds = Fintrax.AdvanceEmi(date);
 
-        ds.Tables[0].TableName = "ADVANCE EMI";
+        ds.Tables[0].TableName = "Ledger Register";
 
         using (XLWorkbook wb = new XLWorkbook())
         {
@@ -46,7 +46,7 @@ public partial class WebSite5_production_AdvanceEmi : System.Web.UI.Page
             Response.Buffer = true;
             Response.Charset = "";
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment;filename=AdvanceEmi-" + date + ".xlsx");
+            Response.AddHeader("content-disposition", "attachment;filename=LedgerRegister-" + date + ".xlsx");
             using (MemoryStream MyMemoryStream = new MemoryStream())
             {
                 wb.SaveAs(MyMemoryStream);

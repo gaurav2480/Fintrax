@@ -43,6 +43,12 @@ public partial class WebSite5_production_ProjectedInterestDetailsHisto : System.
 
         ds.Tables[0].TableName = "HISTORICAL EMI VIEW";
 
+        ds.Tables[1].TableName = "DISBURSED SUMMARY";
+
+        ds.Tables[2].TableName = "NOT DISBURSED SUMMARY";
+
+        ds.Tables[3].TableName = "OVERALL SUMMARY";
+
 
         using (XLWorkbook wb = new XLWorkbook())
         {

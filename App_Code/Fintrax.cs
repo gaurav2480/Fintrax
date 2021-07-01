@@ -748,10 +748,10 @@ public class Fintrax
         using (SqlConnection con = Fintrax.GetDBConnection())
         {
 
-            SqlCommand cmd_sp = new SqlCommand("AdvanceEmi", con);
+            SqlCommand cmd_sp = new SqlCommand("dummy", con);
 
             cmd_sp.CommandType = CommandType.StoredProcedure;
-            cmd_sp.Parameters.AddWithValue("@date", date);
+         //   cmd_sp.Parameters.AddWithValue("@date", date);
          
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd_sp;

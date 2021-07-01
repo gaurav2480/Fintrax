@@ -36,8 +36,10 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
         
         string bank = Request.Form["bank"];
         string ID = Request.Form["statementType"];
-
-        string filePath = string.Empty;
+            string value = "";
+            string drcr = "";
+            string description = "";
+            string filePath = string.Empty;
         if (FileUpload1.PostedFile != null)
         {
             string path = Server.MapPath("~/Uploads/");
@@ -93,10 +95,20 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
             string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
             foreach (DataRow row in dt.Rows)
             {
-               
-                string value = row["Value Date"].ToString();
-                string drcr = row["Cr/Dr"].ToString();
-                string description = row["Description"].ToString();
+                    if (bank=="5")
+                    {
+                       
+                         value = row["Value Date"].ToString();
+                         drcr = row["Cr/Dr"].ToString();
+                         description = row["Description"].ToString();
+                    }
+                    else
+                    {
+                         value = row["Transaction_Date"].ToString();
+                         drcr = "CR";
+                         description = row["ID"].ToString();
+                    }
+              
                     if (value == "")
                 {
 
@@ -110,10 +122,13 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                     }else
                     {
                         string dateData = value.Replace('-', '/');
-                            description = description.Replace(',', ' ');
-                            description = description.Replace('&', ' ');
+                          description = description.Replace(',', ' ');
+                          description = description.Replace('&', ' ');
 
-                        DateTime data = DateTime.ParseExact(dateData, "MM/dd/yyyy", null);
+                         CultureInfo culture = new CultureInfo("en-US");
+                         DateTime data = Convert.ToDateTime(dateData, culture);
+
+                         //DateTime data = DateTime.ParseExact(dateData, "dd/MM/yyyy", null);
                         double date = data.ToOADate();
                         SqlConnection sqlcon = new SqlConnection(conn);
                         sqlcon.Open();
@@ -142,7 +157,7 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                                 }
                                 else
                                 {
-                                    CHTID = "0";
+                                    CHTID = "5";
 
                                 }
 
@@ -166,8 +181,17 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                                 string InsertStatementQuery = "Insert into BANKDEPOSITSLIPDETAILS(CSID,LNID,INSTALLMENTNO,CHEQUENO,CHEQUEDATE,MICRCODE,BANKNAME,BRANCH,CITY,AMOUNT,BALANCEAMOUNT,REALISATIONDATE,RETURNDATE,CHSTATID,IDENTIFIEDCHQ,DOCFEEINCLUDED,BULKRECEIPT,OTHERCHARGES,RECEIPTREF,PAIDDATE,LEDID) values('" + csid + "','0','" + description + "','" + description + "','" + date + "','0','','','','" + row["Transaction Amount(INR)"] + "','" + row["Transaction Amount(INR)"] + "','0','0','0','" + IDF + "','0','0','0.00','0','0','" + ID + "')";
                                 SqlCommand statementCmd = new SqlCommand(InsertStatementQuery, sqlcon);
                                 statementCmd.ExecuteNonQuery();
+                                    string selectTridQuery = "";
+                                    if (bank == "5")
+                                    {
+                                         selectTridQuery = "select top(1) TRID from LEDGERREGISTER where DRLEDID=5 and CRLEDID=4023 order by LRID desc";
+                                    }
+                                    else
+                                    {
+                                         selectTridQuery = "select top(1) TRID from LEDGERREGISTER where DRLEDID=20090 and CRLEDID=28672 order by LRID desc";
+                                    }
 
-                                    string selectTridQuery = "select top(1) TRID from LEDGERREGISTER where DRLEDID=5 and CRLEDID=4023 order by LRID desc";
+                                  
                                     SqlCommand tridCmd = new SqlCommand(selectTridQuery, sqlcon);
                                     SqlDataReader tridReader = tridCmd.ExecuteReader();
                                     while (tridReader.Read())
@@ -175,7 +199,7 @@ public partial class WebSite5_production_UploadBankStatement : System.Web.UI.Pag
                                         long trid = tridReader.GetInt64(0);
                                         trid = trid + 1;
 
-                                        string InsertLedgerReg = "insert into LEDGERREGISTER(LRDATE,DRLEDID,CRLEDID,LEDAMOUNT,ATID,TRID,NARRATION,LNID,REMARKS,SYNID) values('"+date+"','5','4023','"+ row["Transaction Amount(INR)"] + "','1','"+trid+"','','0','"+ description + "','0')";
+                                        string InsertLedgerReg = "insert into LEDGERREGISTER(LRDATE,DRLEDID,CRLEDID,LEDAMOUNT,ATID,TRID,NARRATION,LNID,REMARKS,SYNID) values('"+date+"','"+bank+"','"+ID+"','"+ row["Transaction Amount(INR)"] + "','1','"+trid+"','','0','"+ description + "','0')";
                                         SqlCommand ledgerRegCmd = new SqlCommand(InsertLedgerReg, sqlcon);
                                         ledgerRegCmd.ExecuteNonQuery();
 
