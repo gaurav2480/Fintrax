@@ -127,7 +127,7 @@ public partial class WebSite5_production_TallySyncMrktg_Pay_Sales_O_CC_Avenue : 
                         xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
                         xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Sales - Goa" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
+                        xmlstc1 = xmlstc1 + "<VOUCHER DATE='18-Jul-2021' TAGNAME = 'Reference' TAGVALUE='"+Transaction_ID+"'   VCHTYPE =" + "\"" + "Sales - Goa" + "\"  Action =" + "\"" + "Alter" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
 
 
                 xmlstc1 = xmlstc1 + "<BASICBUYERADDRESS.LIST TYPE='String'>" + "\r\n";
@@ -144,6 +144,8 @@ public partial class WebSite5_production_TallySyncMrktg_Pay_Sales_O_CC_Avenue : 
                 xmlstc1 = xmlstc1 + "<NARRATION>CC AVENUE - " + Transaction_ID + "</NARRATION>\r\n";
                 xmlstc1 = xmlstc1 + "<COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\r\n";
                 xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>Sales - Goa</VOUCHERTYPENAME>\r\n";
+                xmlstc1 = xmlstc1 + "<REFERENCE>11021794524222222</REFERENCE>\r\n";
+
                 xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
                 xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>HDFC C / C - Goa</PARTYLEDGERNAME>\r\n";
                 xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";

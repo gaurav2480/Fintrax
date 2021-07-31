@@ -189,7 +189,17 @@ public partial class WebSite5_production_cybil : System.Web.UI.Page
             Session["RegisteredDate"] = ds.Tables[0].Rows[0]["RegisteredDate"].ToString();
             Session["ActualPaymentAmt"] = ds.Tables[0].Rows[0]["ActualPaymentAmt"].ToString();
          
-            Session["overdue"] = dss.Tables[0].Rows[0]["EMIAMOUNT"].ToString();
+
+              if(dss.Tables[0].Rows.Count == 0)
+                {
+                    Session["overdue"] ="0";
+                }
+                else
+                {
+                    Session["overdue"] = dss.Tables[0].Rows[0]["EMIAMOUNT"].ToString();
+                }
+
+           // Session["overdue"] = dss.Tables[0].Rows[0]["EMIAMOUNT"].ToString();
 
             loanNo.Text = Session["loanNo"].ToString();
             customerName.Text = Session["customerName"].ToString();

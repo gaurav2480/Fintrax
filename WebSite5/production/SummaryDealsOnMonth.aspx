@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TallySyncUnidentified_Receipts.aspx.cs" Inherits="WebSite5_production_TallySyncUnidentified_Receipts" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SummaryDealsOnMonth.aspx.cs" Inherits="WebSite5_production_SummaryDealsOnMonth" %>
 
 <!DOCTYPE html>
 
@@ -20,7 +20,7 @@
     <style>
 
           #sidebar-menu{
-         position: fixed;
+         
          width: 230px;
          margin-top:70px;
         }
@@ -90,7 +90,7 @@
            <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border-bottom: 2px; height:auto; color: #172D44;" id="img">
 
-                        <!--   <img src="../production/images/KSC1.png" class="img-square" alt="" style="margin-top:3px; margin-bottom:5px;" width="200" height="53"/><br />-->
+                          <img src="../production/images/KSC1.png" class="img-square" alt="" style="margin-top:3px; margin-bottom:5px;" width="200" height="53"/><br />
                       
                      <!-- <span style="opacity: 0.5; font-size:16px; margin-bottom:150px; font-style:oblique; font-family:'Bookman Old Style'; color:#FCDE97">Karma Group</span>-->
                     </div>
@@ -118,19 +118,39 @@
                         <div class="menu_section">
 
                             <h3>MENU</h3>
-                          <ul class="nav side-menu">
-
-
-                          <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
+                            <ul class="nav side-menu">
+                            <li><a><i class='fa fa-home'></i>Reports<span class='fa fa-chevron-down'></span> </a>
                               <ul class='nav child_menu'>
-                                  <li><a href="TallySyncUnidentified_Receipts.aspx">Sync Unidentified Receipts</a></li>
-                                  <li><a href="TallySync_Invoices.aspx">Sync Invoices</a></li>
-                                 
+                                   <li><a href="AdvanceEmi.aspx">Advance Emi</a></li>
+                                  <li><a href="LastRowPaidOfClosedLoans.aspx">Additional Capital</a></li>
+                                  <li><a href="Overdue_Historical.aspx">Overdue Historical</a></li>
+                                    <li><a href="Interest_Waiver.aspx">Interest Loss - Waiver</a></li>
+<li><a href="ProjectedInterestDetails.aspx">Projected Interest Details</a></li>
+<li><a href="Loan_Debtors.aspx">Loan Debtors</a></li>
+<li><a href="Cancelled_Loans.aspx">Interest Loss - Cancelled</a></li>
+<li><a href="loanDueForDis.aspx">Loan Due For Disbursement</a></li>
+<li><a href="CollectionForMonth.aspx">Collection For Month</a></li>
+ <li><a href="CollectionBeforeDib.aspx">Collection Before Disbursement</a></li>
+  <li><a href="LoanSanctionRegister.aspx">Loan Sanction Register</a></li>
+<li><a href="LoanDisbursementRegister.aspx">Loan Disbursement Register</a></li>
+ <li><a href="Pre_Disbused_Emi_Collection.aspx">Pre Disbursement EMI Collection</a></li>
+<li><a href="Realisation_Status.aspx">Realisation Status</a></li>
+<li><a href="Closed_Loans.aspx">Interest Loss - Forclosure</a></li>
+<li><a href="RollOver.aspx">Roll Over</a></li>
+<li><a href="ProjectedInterestDetailsHisto.aspx">Historical EMI View</a></li>
+<li><a href="BulkReceiptTotal.aspx">Bulk Receipt Total</a></li>
+<li><a href="UploadBankStatement.aspx">Upload Other Receipts</a></li>
                               </ul>
                           </li>
 
-                          
-                      </ul>
+                        <li><a><i class='fa fa-home'></i>Tally Sync<span class='fa fa-chevron-down'></span> </a>
+                              <ul class='nav child_menu'>
+                                <li><a href="TallySyncPA_NO.aspx">PA No Sync</a></li>
+                                 <li><a href="TallySyncCustomerLedger.aspx">Customer Ledger Sync</a></li>
+				 <li><a href="TallySync_Transactions.aspx">Sync Ledger Register</a></li>
+                              </ul>
+                          </li>
+                            </ul>
                         </div>
 
 
@@ -170,7 +190,7 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
-               <%--   <li class="">
+                <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                      <!--<img src="images/img.jpg" alt=""/>-->
                     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
@@ -182,7 +202,7 @@
                      <li><a href="#addEmployeeModal" data-toggle="modal">Setting</a></li>
                     <li><a href="logout.aspx"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
-                </li>--%>
+                </li>
                    <li class="">
                      <%-- <div class="main">
                           <div class="form-group has-feedback has-search">
@@ -200,105 +220,86 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-          
-        <div class="right_col" role="main">
-          <div class="">
 
-           
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                 <div class="x_panel">
-                              
-                              <div class="x_content" id="x_content">
+               <div class="right_col" role="main">
+                   <div class="">
 
 
 
+                       <div class="clearfix"></div>
 
-                                  <div class="container-fluid">
+                       <div class="row">
+                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                               <div class="x_panel">
 
-                                      <div class="row">
+                                   <div class="x_content" id="x_content">
+                                       <div class="container-fluid">
 
-                                          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " id="head">
-                                              <br />
-                                              <h3 class="text-center">UNIDENTIFIED RECEIPT CREATION IN TALLY</h3>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <br />
-                                  <div class="container-fluid">
+                                           <div class="row">
 
-                                      <div>
+                                               <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " id="head">
+                                                   <br />
+                                                   <h3 class="text-center">SUMMARY OF DEALS</h3>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <br />
+                                       <div class="container-fluid">
 
-                                        <div class="row">
-                                            <div class="col-md-3 col-sm-3 col-xs-12 col-lg-3" id="">
-                                              <div class="form-group">
-                                                  <label for="sel1">Bank:</label>
-                                                  <select class="form-control" name="bank" runat="server" id="bank" >
-                                                      <option disabled selected value>Select an Option</option>
-                                                       <option value="ICICI BANK LTD.Goa">ICICI BANK LTD</option>
-                                                       <option value="HDFC C/C-Goa">HDFC BANK CC</option>
-                                                      <option value="AXIS BANK.LTD.Goa">AXIS BANK LTD</option>
-                                                       <option value="HDFC BANK-Goa">HDFC BANK LTD</option>
-                                                      
-                                                  </select>
-                                              </div>
-                                          </div>
+                                           <div class="row">
+                                               <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3" id="">
+                                                   <label for="sel1">From Date:</label>
+                                                   <div class="input-group date" id="datepicker1" data-provide="datepicker">
+                                                       <asp:TextBox ID="fromDate" class="form-control pull-right" runat="server"></asp:TextBox>
+                                                       <div class="input-group-addon">
+                                                           <span class="glyphicon glyphicon-th"></span>
+                                                       </div>
+                                                   </div>
+                                               </div>
 
-                                      </div>
+                                           </div>
 
-                                          <br />
-
-
-                                          <div class="row">
-                                              <div class="col-md-3">
-                                              <div class="form-group">
-                                                  <asp:FileUpload ID="FileUpload1" runat="server" /> 
-                                              </div>
-                                          </div>
-
-
-                                          </div>
-
-                                     
-                                        
-                                      
-
-                                          <div class="row">
-
-                                              <div class="col-md-2  col-lg-2">
-                                                  <label for="sel1">&nbsp;</label>
-                                                  <asp:Button ID="Button2" class="btn btn-primary pull-right btn-block" runat="server" OnClick="Button2_Click" Text="Sync" />
-                                                  <asp:Label ID="label1" runat="server"></asp:Label>
-                                              </div>
-                                          </div>
-                                          <br />
-
-                                          <div class="row">
-                                              <div class="col-md-6  col-lg-6">
-
-                                                  <asp:Label runat="server" Style="color: darkgreen;" ID="Label5"></asp:Label>
-                                                  <asp:Label runat="server" Style="color: red;" ID="Label6"></asp:Label>
-                                              </div>
-
-                                          </div>
+                                           <div class="row">
+                                               <div class="col-md-3 col-xs-12 col-sm-3 col-lg-3" id="">
+                                                   <label for="sel1">To Date:</label>
+                                                   <div class="input-group date" id="datepicker2" data-provide="datepicker">
+                                                       <asp:TextBox ID="toDate" class="form-control pull-right" runat="server"></asp:TextBox>
+                                                       <div class="input-group-addon">
+                                                           <span class="glyphicon glyphicon-th"></span>
+                                                       </div>
+                                                   </div>
+                                               </div>
 
 
-                                      </div>
+                                           </div>
+
+                                           <div class="row">
+
+                                               <div class="col-md-2 col-xs-9 col-sm-2 col-lg-2">
+                                                   <label for="sel1">&nbsp;</label>
+                                                   <asp:Button ID="Button1" class="btn btn-primary pull-right btn-block" runat="server" OnClick="Button1_Click" Text="Generate" />
+                                               </div>
+
+                                           </div>
+                                       </div>
 
 
-                              </div>
-                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
            </form>
           <!-- /page content -->
 
-         
+          <!-- footer content -->
+          <footer>
+              <div class="pull-right">
+              </div>
+              <div class="clearfix"></div>
+          </footer>
+          <!-- /footer content -->
       </div>
     </div>
 
@@ -377,13 +378,13 @@
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">  
    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script> 
+
      <script type="text/javascript">
            
             $(document).ready(function () {
-                var dateToday = new Date();
+                
                 $('#datepicker1,#datepicker2').datepicker({
                     format: "yyyy-mm-dd",
-                    startDate: "-15d",
                     autoclose: true
                    
                 });
@@ -399,10 +400,9 @@
                     e.preventDefault();
                 }
             });
-    </script>
+        </script>
     
-  
-
+    
        
 </body>
 </html>

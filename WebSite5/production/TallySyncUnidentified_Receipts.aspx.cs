@@ -31,6 +31,9 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
     {
 
         string bankName = Request.Form["bank"];
+        string ledgerValue = "";
+
+        string voucherType = "";
 
         try {
             string filePath = string.Empty;
@@ -97,8 +100,8 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
 
                     SqlConnection sqlcon = new SqlConnection(conn);
                     sqlcon.Open();
-
-                    string InsertQuery = "Insert into unidentified_receipts values('" + date + "','" + row["Description"].ToString() + "','" + row["Transaction Amount(INR)"] + "','Active') ";
+                   
+                    string InsertQuery = "Insert into unidentified_receipts values('" + date + "','" + row["Description"].ToString() + "','" + row["Transaction Amount(INR)"] + "','Active','" + row["Contract No"].ToString() + "')";
                     SqlCommand cmd = new SqlCommand(InsertQuery, sqlcon);
                     cmd.ExecuteNonQuery();
                     sqlcon.Close();
@@ -114,6 +117,7 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                         DateTime valueDate = reader1.GetDateTime(1);
                         string narration = reader1.GetString(2);
                         double amount = reader1.GetDouble(3);
+                        string contractNo = reader1.GetString(5);
                         
                         narration = Regex.Replace(narration, @"[^0-9a-zA-Z]+", " ");
 
@@ -134,102 +138,285 @@ public partial class WebSite5_production_TallySyncUnidentified_Receipts : System
                         int year = valueDate.Year;
 
 
-
-                        int i = 2116;
-                        string xmlstc1 = "<ENVELOPE>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</HEADER>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<BODY>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<IMPORTDATA>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + "Receipt - Goa" + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
-                        xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
-
-                        xmlstc1 = xmlstc1 + "<NARRATION>" + narration + "</NARRATION>\r\n";
-                        xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + bankName + "</PARTYLEDGERNAME>\r\n";
-                        xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + "Receipt - Goa" + "</VOUCHERTYPENAME>\r\n";
-                        // xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
-                        xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
-                        xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
-                        xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Accounting Voucher View" + "</PERSISTEDVIEW>\r\n";
-                        xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "Sameer" + "</ENTEREDBY>\r\n";
-                        xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + year + "" + month + "" + day + "</EFFECTIVEDATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<HASCASHFLOW>" + "Yes" + "</HASCASHFLOW>\r\n";
-                        xmlstc1 = xmlstc1 + "<ISVATDUTYPAID>" + "Yes" + "</ISVATDUTYPAID>\r\n";
-
-                        xmlstc1 = xmlstc1 + "<ALLLEDGERENTRIES.LIST>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<LEDGERNAME>" + "Unidentified Money" + "</LEDGERNAME>\r\n";
-                        xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "No" + "</ISDEEMEDPOSITIVE>\r\n";
-                        xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
-                        xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
-                        xmlstc1 = xmlstc1 + "<ISPARTYLEDGER>" + "No" + "</ISPARTYLEDGER>\r\n";
-                        xmlstc1 = xmlstc1 + "<ISLASTDEEMEDPOSITIVE>" + "No" + "</ISLASTDEEMEDPOSITIVE>\r\n";
-                        xmlstc1 = xmlstc1 + "<AMOUNT> " + amount + "</AMOUNT>\r\n";
-                        xmlstc1 = xmlstc1 + "</ALLLEDGERENTRIES.LIST>" + "\r\n";
-
-
-                        xmlstc1 = xmlstc1 + "<ALLLEDGERENTRIES.LIST>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<LEDGERNAME>" + bankName + "</LEDGERNAME>\r\n";
-                        xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
-                        xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
-                        xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
-                        xmlstc1 = xmlstc1 + "<ISPARTYLEDGER>" + "Yes" + "</ISPARTYLEDGER>\r\n";
-                        xmlstc1 = xmlstc1 + "<ISLASTDEEMEDPOSITIVE>" + "Yes" + "</ISLASTDEEMEDPOSITIVE>\r\n";
-                        xmlstc1 = xmlstc1 + "<AMOUNT>-" + amount + "</AMOUNT>\r\n";
-                        xmlstc1 = xmlstc1 + "<BANKALLOCATIONS.LIST>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<INSTRUMENTDATE>" + year + "" + month + "" + day + "</INSTRUMENTDATE>\r\n";
-                        xmlstc1 = xmlstc1 + "<TRANSACTIONTYPE>" + "Cheque/DD" + "</TRANSACTIONTYPE>\r\n";
-                        xmlstc1 = xmlstc1 + "<PAYMENTFAVOURING>" + "Unidentified Money" + "</PAYMENTFAVOURING>\r\n";
-                        xmlstc1 = xmlstc1 + "<PAYMENTMODE>" + "Transacted" + "</PAYMENTMODE>\r\n";
-                        xmlstc1 = xmlstc1 + "<BANKPARTYNAME>" + "Unidentified Money" + "</BANKPARTYNAME>\r\n";
-                        xmlstc1 = xmlstc1 + "<CHEQUEPRINTED>" + "1" + "</CHEQUEPRINTED>\r\n";
-                        xmlstc1 = xmlstc1 + "<AMOUNT>-" + amount + "</AMOUNT>\r\n";
-                        xmlstc1 = xmlstc1 + "</BANKALLOCATIONS.LIST>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</ALLLEDGERENTRIES.LIST>" + "\r\n";
-
-                        xmlstc1 = xmlstc1 + "</VOUCHER>" + "\r\n";
-                        xmlstc1 = xmlstc1 + "</TALLYMESSAGE>\r\n";
-                        xmlstc1 = xmlstc1 + "</REQUESTDATA>\r\n";
-                        xmlstc1 = xmlstc1 + "</IMPORTDATA>\r\n";
-                        xmlstc1 = xmlstc1 + "</BODY>";
-                        xmlstc1 = xmlstc1 + "</ENVELOPE>";
-
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
-                        httpWebRequest1.Method = "POST";
-                        httpWebRequest1.ContentLength = xmlstc1.Length;
-                        httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
-                        StreamWriter streamWriter1 = new StreamWriter(httpWebRequest1.GetRequestStream());
-                        streamWriter1.Write(xmlstc1);
-                        streamWriter1.Close();
-
-                        HttpWebResponse objResponse1 = (HttpWebResponse)httpWebRequest1.GetResponse();
-                        using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
+                      if(bankName== "ICICI BANK LTD.Goa" || bankName == "HDFC C/C-Goa") 
                         {
-                            result = sr1.ReadToEnd();
-                            sr1.Close();
-
-                            if (result.Contains("<CREATED>1</CREATED>"))
+                            voucherType = "Receipt - Goa";
+                            if (contractNo=="" || contractNo == null)
                             {
-                                SqlConnection sqlcon1 = new SqlConnection(conn);
-                                sqlcon1.Open();
-                                string query1 = "update unidentified_receipts set Status='Inactive' where ID='"+ID+"'";
-                                SqlCommand cmd1 = new SqlCommand(query1, sqlcon1);
-                                cmd1.ExecuteNonQuery();
-                                sqlcon1.Close();
+                                ledgerValue = "Unidentified Money";
+                            }
+                            else
+                            {
+                                ledgerValue = contractNo;
+                            }
+                          
+                        }else if (bankName== "AXIS BANK.LTD.Goa")
+                        {
+                            voucherType = "Sales - Goa";
+                            if (contractNo == "" || contractNo == null)
+                            {
+                                ledgerValue = "Unidentified Money -Odyssey";
+                            }
+                            else
+                            {
+                                ledgerValue = contractNo;
                             }
 
+                        }else if (bankName== "HDFC BANK-Goa")
+                        {
+                            voucherType = "Sales - Goa";
+                            if (contractNo == "" || contractNo == null)
+                            {
+                                ledgerValue = "Unidentified Money -Mktg";
+                            }
+                            else
+                            {
+                                ledgerValue = contractNo;
+                            }
                         }
 
-                        i++;
+                        if (bankName == "AXIS BANK.LTD.Goa" || bankName == "HDFC BANK-Goa")
+                        {
+                            int i = 2116;
+                            string xmlstc1 = "<ENVELOPE>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</HEADER>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<BODY>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<IMPORTDATA>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + voucherType + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Invoice Voucher View" + "\" >\r\n";
+
+                            xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<REFERENCEDATE>" + year + "" + month + "" + day + "</REFERENCEDATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<GSTREGISTRATIONTYPE>" + "Unregistered" + "</GSTREGISTRATIONTYPE>\r\n";
+                            xmlstc1 = xmlstc1 + "<VATDEALERTYPE>" + "Unregistered" + "</VATDEALERTYPE>\r\n";
+                            xmlstc1 = xmlstc1 + "<STATENAME>" + "Goa" + "</STATENAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<NARRATION>" + narration + "</NARRATION>\r\n";
+                            xmlstc1 = xmlstc1 + "<COUNTRYOFRESIDENCE>" + "India" + "</COUNTRYOFRESIDENCE>\r\n";
+                            xmlstc1 = xmlstc1 + "<PARTYGSTIN>" + "30AAACU2414K1ZS" + "</PARTYGSTIN>\r\n";
+                            xmlstc1 = xmlstc1 + "<PLACEOFSUPPLY>" + "Goa" + "</PLACEOFSUPPLY>\r\n";
+                            xmlstc1 = xmlstc1 + "<PARTYNAME>" + bankName + "</PARTYNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + bankName + "</PARTYLEDGERNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + voucherType + "</VOUCHERTYPENAME>\r\n";
+                            // xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
+                            xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
+                            xmlstc1 = xmlstc1 + "<BASICBASEPARTYNAME>" + bankName + "</BASICBASEPARTYNAME>\r\n";
+
+
+                            xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
+                            xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Invoice Voucher View" + "</PERSISTEDVIEW>\r\n";
+                            xmlstc1 = xmlstc1 + "<CONSIGNEEGSTIN>" + "30AAACU2414K1ZS" + "</CONSIGNEEGSTIN>\r\n";
+                            xmlstc1 = xmlstc1 + "<BASICBUYERNAME>" + bankName + "</BASICBUYERNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<PARTYMAILINGNAME>" + bankName + "</PARTYMAILINGNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<CONSIGNEEMAILINGNAME>" + bankName + "</CONSIGNEEMAILINGNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<CONSIGNEECOUNTRYNAME>" + "India" + "</CONSIGNEECOUNTRYNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<CONSIGNEESTATENAME>" + "Goa" + "</CONSIGNEESTATENAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<VCHENTRYMODE>" + "Accounting Invoice" + "</VCHENTRYMODE>\r\n";
+                            xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "Sameer" + "</ENTEREDBY>\r\n";
+                            xmlstc1 = xmlstc1 + "<VOUCHERTYPEORIGNAME>" + "Sales" + "</VOUCHERTYPEORIGNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + year + "" + month + "" + day + "</EFFECTIVEDATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<HASCASHFLOW>" + "Yes" + "</HASCASHFLOW>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISINVOICE>" + "Yes" + "</ISINVOICE>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISVATDUTYPAID>" + "Yes" + "</ISVATDUTYPAID>\r\n";
+
+
+
+                            xmlstc1 = xmlstc1 + "<LEDGERENTRIES.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERNAME>" + bankName + "</LEDGERNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
+                            xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISPARTYLEDGER>" + "No" + "</ISPARTYLEDGER>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISLASTDEEMEDPOSITIVE>" + "No" + "</ISLASTDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<AMOUNT>-" + amount + "</AMOUNT>\r\n";
+
+                            xmlstc1 = xmlstc1 + "<BANKALLOCATIONS.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<INSTRUMENTDATE>" + year + "" + month + "" + day + "</INSTRUMENTDATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<BANKERSDATE>" + year + "" + month + "" + day + "</BANKERSDATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<TRANSACTIONTYPE>" + "Same Bank Transfer" + "</TRANSACTIONTYPE>\r\n";
+                            xmlstc1 = xmlstc1 + "<PAYMENTFAVOURING>" + ledgerValue + "</PAYMENTFAVOURING>\r\n";
+                            xmlstc1 = xmlstc1 + "<PAYMENTMODE>" + "Transacted" + "</PAYMENTMODE>\r\n";
+                            xmlstc1 = xmlstc1 + "<BANKPARTYNAME>" + ledgerValue + "</BANKPARTYNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<AMOUNT>-" + amount + "</AMOUNT>\r\n";
+                            xmlstc1 = xmlstc1 + "</BANKALLOCATIONS.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</LEDGERENTRIES.LIST>" + "\r\n";
+
+
+                            xmlstc1 = xmlstc1 + "<LEDGERENTRIES.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERNAME>" + ledgerValue + "</LEDGERNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "No" + "</ISDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
+                            xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISPARTYLEDGER>" + "No" + "</ISPARTYLEDGER>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISLASTDEEMEDPOSITIVE>" + "No" + "</ISLASTDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<AMOUNT>" + amount + "</AMOUNT>\r\n";
+                            xmlstc1 = xmlstc1 + "<VATEXPAMOUNT>" + amount + "</VATEXPAMOUNT>\r\n";
+                            xmlstc1 = xmlstc1 + "</LEDGERENTRIES.LIST>" + "\r\n";
+
+
+                            xmlstc1 = xmlstc1 + "</VOUCHER>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</TALLYMESSAGE>\r\n";
+                            xmlstc1 = xmlstc1 + "</REQUESTDATA>\r\n";
+                            xmlstc1 = xmlstc1 + "</IMPORTDATA>\r\n";
+                            xmlstc1 = xmlstc1 + "</BODY>";
+                            xmlstc1 = xmlstc1 + "</ENVELOPE>";
+
+
+
+                            HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
+                            httpWebRequest1.Method = "POST";
+                            httpWebRequest1.ContentLength = xmlstc1.Length;
+                            httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
+                            StreamWriter streamWriter1 = new StreamWriter(httpWebRequest1.GetRequestStream());
+                            streamWriter1.Write(xmlstc1);
+                            streamWriter1.Close();
+
+                            HttpWebResponse objResponse1 = (HttpWebResponse)httpWebRequest1.GetResponse();
+                            using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
+                            {
+                                result = sr1.ReadToEnd();
+                                sr1.Close();
+
+                                if (result.Contains("<CREATED>1</CREATED>"))
+                                {
+                                    SqlConnection sqlcon1 = new SqlConnection(conn);
+                                    sqlcon1.Open();
+                                    string query1 = "update unidentified_receipts set Status='Inactive' where ID='" + ID + "'";
+                                    SqlCommand cmd1 = new SqlCommand(query1, sqlcon1);
+                                    cmd1.ExecuteNonQuery();
+                                    sqlcon1.Close();
+                                }
+
+                            }
+
+                            i++;
+                            
+
+                        }
+                        else
+                        {
+                            int i = 2116;
+                            string xmlstc1 = "<ENVELOPE>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<HEADER>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<TALLYREQUEST>Import Data</TALLYREQUEST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</HEADER>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<BODY>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<IMPORTDATA>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<REQUESTDESC>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<REPORTNAME>Vouchers</REPORTNAME>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<STATICVARIABLES>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<SVCURRENTCOMPANY>Prestige Holiday Resorts LLP</SVCURRENTCOMPANY>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</STATICVARIABLES>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</REQUESTDESC>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<REQUESTDATA>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<TALLYMESSAGE xmlns:UDF=" + "\"" + "TallyUDF" + "\" >" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<VOUCHER    VCHTYPE =" + "\"" + voucherType + "\"  Action =" + "\"" + "Create" + "\"  OBJVIEW=" + "\"" + "Accounting Voucher View" + "\" >\r\n";
+                            xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
+
+                            xmlstc1 = xmlstc1 + "<NARRATION>" + narration + "</NARRATION>\r\n";
+                            xmlstc1 = xmlstc1 + "<PARTYLEDGERNAME>" + bankName + "</PARTYLEDGERNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<VOUCHERTYPENAME>" + voucherType + "</VOUCHERTYPENAME>\r\n";
+                            // xmlstc1 = xmlstc1 + "<REFERENCE>" + receipt_No + "</REFERENCE>\r\n";
+                            xmlstc1 = xmlstc1 + "<VOUCHERNUMBER>" + i + "</VOUCHERNUMBER>\r\n";
+                            xmlstc1 = xmlstc1 + "<FBTPAYMENTTYPE>" + "Default" + "</FBTPAYMENTTYPE>\r\n";
+                            xmlstc1 = xmlstc1 + "<PERSISTEDVIEW>" + "Accounting Voucher View" + "</PERSISTEDVIEW>\r\n";
+                            xmlstc1 = xmlstc1 + "<ENTEREDBY>" + "Sameer" + "</ENTEREDBY>\r\n";
+                            xmlstc1 = xmlstc1 + "<EFFECTIVEDATE>" + year + "" + month + "" + day + "</EFFECTIVEDATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<HASCASHFLOW>" + "Yes" + "</HASCASHFLOW>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISVATDUTYPAID>" + "Yes" + "</ISVATDUTYPAID>\r\n";
+
+                            xmlstc1 = xmlstc1 + "<ALLLEDGERENTRIES.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERNAME>" + ledgerValue + "</LEDGERNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "No" + "</ISDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
+                            xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISPARTYLEDGER>" + "No" + "</ISPARTYLEDGER>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISLASTDEEMEDPOSITIVE>" + "No" + "</ISLASTDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<AMOUNT> " + amount + "</AMOUNT>\r\n";
+
+                             if (bankName == "ICICI BANK LTD.Goa" || bankName == "HDFC C/C-Goa")
+                            {
+                                if (contractNo != "" || contractNo != null)
+                                {
+                                    xmlstc1 = xmlstc1 + "<BILLALLOCATIONS.LIST>" + "\r\n";
+                                    xmlstc1 = xmlstc1 + "<NAME>" + ledgerValue + "</NAME>\r\n";
+                                    xmlstc1 = xmlstc1 + "<BILLTYPE>" + "Agst Ref" + "</BILLTYPE>\r\n";
+                                    xmlstc1 = xmlstc1 + "<TDSDEDUCTEEISSPECIALRATE>" + "No" + "</TDSDEDUCTEEISSPECIALRATE> \r\n";
+                                    xmlstc1 = xmlstc1 + "<AMOUNT> " + amount + "</AMOUNT>\r\n";
+                                    xmlstc1 = xmlstc1 + "</BILLALLOCATIONS.LIST>" + "\r\n";
+                                }
+
+                            }
+                          
+                            xmlstc1 = xmlstc1 + "</ALLLEDGERENTRIES.LIST>" + "\r\n";
+
+
+                            xmlstc1 = xmlstc1 + "<ALLLEDGERENTRIES.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERNAME>" + bankName + "</LEDGERNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISDEEMEDPOSITIVE>" + "Yes" + "</ISDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<LEDGERFROMITEM>" + "No" + "</LEDGERFROMITEM>\r\n";
+                            xmlstc1 = xmlstc1 + "<REMOVEZEROENTRIES>" + "No" + "</REMOVEZEROENTRIES>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISPARTYLEDGER>" + "Yes" + "</ISPARTYLEDGER>\r\n";
+                            xmlstc1 = xmlstc1 + "<ISLASTDEEMEDPOSITIVE>" + "Yes" + "</ISLASTDEEMEDPOSITIVE>\r\n";
+                            xmlstc1 = xmlstc1 + "<AMOUNT>-" + amount + "</AMOUNT>\r\n";
+                            xmlstc1 = xmlstc1 + "<BANKALLOCATIONS.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "<DATE>" + year + "" + month + "" + day + "</DATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<INSTRUMENTDATE>" + year + "" + month + "" + day + "</INSTRUMENTDATE>\r\n";
+                            xmlstc1 = xmlstc1 + "<TRANSACTIONTYPE>" + "Cheque/DD" + "</TRANSACTIONTYPE>\r\n";
+                            xmlstc1 = xmlstc1 + "<PAYMENTFAVOURING>" + ledgerValue + "</PAYMENTFAVOURING>\r\n";
+                            xmlstc1 = xmlstc1 + "<PAYMENTMODE>" + "Transacted" + "</PAYMENTMODE>\r\n";
+                            xmlstc1 = xmlstc1 + "<BANKPARTYNAME>" + ledgerValue + "</BANKPARTYNAME>\r\n";
+                            xmlstc1 = xmlstc1 + "<CHEQUEPRINTED>" + "1" + "</CHEQUEPRINTED>\r\n";
+                            xmlstc1 = xmlstc1 + "<AMOUNT>-" + amount + "</AMOUNT>\r\n";
+                            xmlstc1 = xmlstc1 + "</BANKALLOCATIONS.LIST>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</ALLLEDGERENTRIES.LIST>" + "\r\n";
+
+                            xmlstc1 = xmlstc1 + "</VOUCHER>" + "\r\n";
+                            xmlstc1 = xmlstc1 + "</TALLYMESSAGE>\r\n";
+                            xmlstc1 = xmlstc1 + "</REQUESTDATA>\r\n";
+                            xmlstc1 = xmlstc1 + "</IMPORTDATA>\r\n";
+                            xmlstc1 = xmlstc1 + "</BODY>";
+                            xmlstc1 = xmlstc1 + "</ENVELOPE>";
+
+                            HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
+                            httpWebRequest1.Method = "POST";
+                            httpWebRequest1.ContentLength = xmlstc1.Length;
+                            httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
+                            StreamWriter streamWriter1 = new StreamWriter(httpWebRequest1.GetRequestStream());
+                            streamWriter1.Write(xmlstc1);
+                            streamWriter1.Close();
+
+                            HttpWebResponse objResponse1 = (HttpWebResponse)httpWebRequest1.GetResponse();
+                            using (StreamReader sr1 = new StreamReader(objResponse1.GetResponseStream()))
+                            {
+                                result = sr1.ReadToEnd();
+                                sr1.Close();
+
+                                if (result.Contains("<CREATED>1</CREATED>"))
+                                {
+                                    SqlConnection sqlcon1 = new SqlConnection(conn);
+                                    sqlcon1.Open();
+                                    string query1 = "update unidentified_receipts set Status='Inactive' where ID='" + ID + "'";
+                                    SqlCommand cmd1 = new SqlCommand(query1, sqlcon1);
+                                    cmd1.ExecuteNonQuery();
+                                    sqlcon1.Close();
+                                }
+
+                            }
+
+                            i++;
+                        }
+
+                        
 
 
                      //   result += result + "/n";

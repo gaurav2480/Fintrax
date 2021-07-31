@@ -46,10 +46,10 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
             string conn = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
             SqlConnection sqlcon = new SqlConnection(conn);
             sqlcon.Open();
-            // string query = "select LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(LN.LNDATE),Year(LN.LNDATE)  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID  where LN.ACTIVE in(3,0) and ln.DISBURSEMENTSTATUS = 0 and LOANNO in('PS624Z3')";
+             string query = "select LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(LN.LNDATE),Year(LN.LNDATE)  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID  where  LOANNO in('PN7558Z3F')";
             // string query = "declare @Table as table ([Count] int, LOANNO varchar(50),LEDGERNAME varchar(150),[Address1] varchar(150),[Address2] varchar(150),[CITY] varchar(80),[STATE] varchar(80), PIN varchar(20), COUNTRY varchar(20), Pan varchar(30), LoanType bigint, loanMonth int, LoanYear int) insert into @Table select distinct count(BDS.CSIDENTITY),LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(convert(datetime,ln.lndate-2,103)),Year(convert(datetime,ln.lndate-2,103))  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID join BANKDEPOSITSLIPDETAILS BDS on LN.LNID = BDS.LNID join LEDGERREGISTER LR on LN.LNID=LR.LNID where LN.ACTIVE in(3,0) and ln.DISBURSEMENTSTATUS = 0 and BDS.CHSTATID in(0,1) and(BDS.INSTALLMENTNO like '%DOC FEE%' or BDS.INSTALLMENTNO like '%1ST EMI%' or BDS.INSTALLMENTNO like '%1ST%' or BDS.INSTALLMENTNO like '%FULL AND FINAL%') and LR.SYNID=0  group by LN.LOANNO,LED.LEDGERNAME,LN.EMIAMOUNT,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY ,LEDAD.[STATE],LEDAD.PIN,LN.LNDATE,LEDAD.COUNTRY,LEDAD.ADDRESS3,LT.LTID select LOANNO,LEDGERNAME,Address1,Address2,CITY,[STATE],PIN,COUNTRY,Pan,LoanType,loanMonth,LoanYear from @Table union select  distinct '',case when led2.LEDGERNAME like 'AP%' then led2.LEDGERNAME when led.LEDGERNAME like 'AP%' then led.LEDGERNAME end as [Name] ,'','','','','','','','',0,Year(convert(datetime,ln.lndate-2,103)) from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID left join loans ln on lr.LNID=ln.LNID where  SYNID=0 and  (LEDAMOUNT>0) and (led2.LEDGERNAME like 'AP%' or led.LEDGERNAME like 'AP%') and ln.LNID!=0 and ATID in(1,2)";
 
-            string query = "declare @Table as table ([Count] int, LOANNO varchar(50),LEDGERNAME varchar(150),[Address1] varchar(150),[Address2] varchar(150),[CITY] varchar(80),[STATE] varchar(80), PIN varchar(20), COUNTRY varchar(20), Pan varchar(30), LoanType bigint, loanMonth int, LoanYear int) insert into @Table select distinct count(BDS.CSIDENTITY),LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(convert(datetime,ln.lndate-2,103)),Year(convert(datetime,ln.lndate-2,103))  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID join BANKDEPOSITSLIPDETAILS BDS on LN.LNID = BDS.LNID join LEDGERREGISTER LR on LN.LNID=LR.LNID where LN.ACTIVE in(3,0) and ln.DISBURSEMENTSTATUS = 0 and BDS.CHSTATID in(0,1) and(BDS.INSTALLMENTNO like '%DOC FEE%' or BDS.INSTALLMENTNO like '%1ST EMI%' or BDS.INSTALLMENTNO like '%1ST%' or BDS.INSTALLMENTNO like '%FULL AND FINAL%') and LR.SYNID=0  group by LN.LOANNO,LED.LEDGERNAME,LN.EMIAMOUNT,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY ,LEDAD.[STATE],LEDAD.PIN,LN.LNDATE,LEDAD.COUNTRY,LEDAD.ADDRESS3,LT.LTID select LOANNO,LEDGERNAME,Address1,Address2,CITY,[STATE],PIN,COUNTRY,Pan,LoanType,loanMonth,LoanYear from @Table union select distinct '',ledd.LEDGERNAME as [Name] ,'','','','','','','','',0,Year(convert(datetime,lnn.lndate-2,103)) from loans lnn join LEDGER ledd on lnn.LNID=ledd.LNID where ledd.LNID  in(select  distinct Lr.LNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID  where  SYNID=0 and  (LEDAMOUNT>0) and (led2.LEDGERNAME like 'AP%' or led.LEDGERNAME like 'AP%')  and ATID in(1,2)) and ledd.LNID!=0 and ledd.LEDGERNAME like 'AP%'";
+          //  string query = "declare @Table as table ([Count] int, LOANNO varchar(50),LEDGERNAME varchar(150),[Address1] varchar(150),[Address2] varchar(150),[CITY] varchar(80),[STATE] varchar(80), PIN varchar(20), COUNTRY varchar(20), Pan varchar(30), LoanType bigint, loanMonth int, LoanYear int) insert into @Table select distinct count(BDS.CSIDENTITY),LN.LOANNO,LED.LEDGERNAME,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY,LEDAD.[STATE],LEDAD.PIN,LEDAD.COUNTRY,LEDAD.ADDRESS3 as Pancard,LT.LTID,month(convert(datetime,ln.lndate-2,103)),Year(convert(datetime,ln.lndate-2,103))  from LOANS LN join LEDGER LED on LN.LEDID = LED.LEDID join LEDGERADDRESS LEDAD on LED.LEDID = LEDAD.LEDID join LOANTYPE LT on LT.LTID = LN.LTID join BANKDEPOSITSLIPDETAILS BDS on LN.LNID = BDS.LNID join LEDGERREGISTER LR on LN.LNID=LR.LNID where LN.ACTIVE in(3,0) and ln.DISBURSEMENTSTATUS = 0 and BDS.CHSTATID in(0,1) and(BDS.INSTALLMENTNO like '%DOC FEE%' or BDS.INSTALLMENTNO like '%1ST EMI%' or BDS.INSTALLMENTNO like '%1ST%' or BDS.INSTALLMENTNO like '%FULL AND FINAL%') and LR.SYNID=0  group by LN.LOANNO,LED.LEDGERNAME,LN.EMIAMOUNT,LEDAD.ADDRESS1,LEDAD.ADDRESS2,LEDAD.CITY ,LEDAD.[STATE],LEDAD.PIN,LN.LNDATE,LEDAD.COUNTRY,LEDAD.ADDRESS3,LT.LTID select LOANNO,LEDGERNAME,Address1,Address2,CITY,[STATE],PIN,COUNTRY,Pan,LoanType,loanMonth,LoanYear from @Table union select distinct '',ledd.LEDGERNAME as [Name] ,'','','','','','','','',0,Year(convert(datetime,lnn.lndate-2,103)) from loans lnn join LEDGER ledd on lnn.LNID=ledd.LNID where ledd.LNID  in(select  distinct Lr.LNID from LEDGERREGISTER LR left join LEDGER Led on LR.CRLEDID=led.LEDID left join LEDGER Led2 on lr.DRLEDID=led2.LEDID  where  SYNID=0 and  (LEDAMOUNT>0) and (led2.LEDGERNAME like 'AP%' or led.LEDGERNAME like 'AP%')  and ATID in(1,2)) and ledd.LNID!=0 and ledd.LEDGERNAME like 'AP%'";
             SqlCommand cmd = new SqlCommand(query, sqlcon);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -118,8 +118,8 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
 
-                        // HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
+                         HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        //   HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -179,8 +179,8 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                         xmlstc1 = xmlstc1 + "</IMPORTDATA>\r\n";
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
-                        //    HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
+                            HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        //   HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -238,8 +238,8 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                         xmlstc1 = xmlstc1 + "</IMPORTDATA>\r\n";
                         xmlstc1 = xmlstc1 + "</BODY>";
                         xmlstc1 = xmlstc1 + "</ENVELOPE>";
-                        //     HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                        HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
+                            HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                        //   HttpWebRequest httpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                         httpWebRequest1.Method = "POST";
                         httpWebRequest1.ContentLength = xmlstc1.Length;
                         httpWebRequest1.ContentType = "application/x-www-form-urlencoded";
@@ -305,7 +305,7 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                 xmlstc = xmlstc + "<MAILINGNAME>" + name + "</MAILINGNAME>\r\n";
                 xmlstc = xmlstc + "</MAILINGNAME.LIST>" + "\r\n";
                 xmlstc = xmlstc + "<ADDRESS.LIST TYPE = 'String'>" + "\r\n";
-                xmlstc = xmlstc + "<ADDRESS>" + Address + "</ADDRESS>\r\n";
+                xmlstc = xmlstc + "<ADDRESS>" + "" + "</ADDRESS>\r\n";
                 xmlstc = xmlstc + "<ADDRESS>" + Address2 + "</ADDRESS>\r\n";
                 xmlstc = xmlstc + "<ADDRESS>" + city + "</ADDRESS>\r\n";
                 xmlstc = xmlstc + "</ADDRESS.LIST>" + "\r\n";
@@ -318,8 +318,8 @@ public partial class WebSite5_production_TallySyncCustomerLedger : System.Web.UI
                 xmlstc = xmlstc + "</BODY>";
                 xmlstc = xmlstc + "</ENVELOPE>";
 
-                //   HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:" + "9028");
+                //     HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://103.87.174.195:" + "9035");
                 httpWebRequest.Method = "POST";
                 httpWebRequest.ContentLength = xmlstc.Length;
                 httpWebRequest.ContentType = "application/x-www-form-urlencoded";

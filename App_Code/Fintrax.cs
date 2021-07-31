@@ -63,7 +63,7 @@ public class Fintrax
         using (SqlConnection cs1 = Fintrax.GetDBConnection())
         {
 
-            SqlCommand SqlCmd = new SqlCommand("SELECT sum(lsd.EMIVALUE) EMIAMOUNT FROM LOANS LN ,LOANSCHEDULE LS LEFT OUTER JOIN LOANSCHEDULEDETAILS LSD ON LS.LSID = LSD.LSID,LOANTYPE LT,LOANSTATUS LST WHERE LN.LOANNO =@loanNo AND LS.LNID = LN.LNID AND LT.LTID = LN.LTID AND LST.LNSID = LN.ACTIVE AND LS.STATUS = 0 AND LSD.INSTALLMENTDATE <= GETDATE() AND LSD.INSTALLMENTNO > LN.INSTALLMENTSPAID", cs1);
+            SqlCommand SqlCmd = new SqlCommand("SELECT case when LN.ACTIVE=1 then 0 else sum(lsd.EMIVALUE) end as EMIAMOUNT FROM LOANS LN ,LOANSCHEDULE LS LEFT OUTER JOIN LOANSCHEDULEDETAILS LSD ON LS.LSID = LSD.LSID,LOANTYPE LT,LOANSTATUS LST WHERE LN.LOANNO =@loanNo AND LS.LNID = LN.LNID AND LT.LTID = LN.LTID AND LST.LNSID = LN.ACTIVE AND LS.STATUS = 0 AND LSD.INSTALLMENTDATE <= GETDATE() AND LSD.INSTALLMENTNO > LN.INSTALLMENTSPAID group by LN.ACTIVE", cs1);
             SqlCmd.Parameters.Add("@loanNo", SqlDbType.VarChar).Value = loanNo;
             da = new SqlDataAdapter(SqlCmd);
             ds = new DataSet();
@@ -846,6 +846,29 @@ public class Fintrax
     }
 
 
+    public static DataSet SummaryOfDeals(string fromDate, string toDate)
+    {
+
+        using (SqlConnection con = Fintrax.GetDBConnection())
+        {
+
+            SqlCommand cmd_sp = new SqlCommand("SUMMARYOFDEALSONMONTH", con);
+
+            cmd_sp.CommandType = CommandType.StoredProcedure;
+            cmd_sp.Parameters.AddWithValue("@STARTDATE", fromDate);
+            cmd_sp.Parameters.AddWithValue("@ENDDATE", toDate);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd_sp;
+            DataSet datatable = new DataSet();
+            da.Fill(datatable);
+            return datatable;
+
+        }
+
+    }
+
+
+
     public static int InsertInterestDifference(string fromDate, string toDate)
     {
 
@@ -1470,7 +1493,7 @@ public static DataTable LoanRepaymentSchedule(string LOANNO)
         using (SqlConnection cs1 = Fintrax.GetDBConnection())
         {
 
-            SqlCommand SqlCmd = new SqlCommand("declare @tempTable as table (LOANNO varchar(50),DateofLastPayment varchar(50),DateClosed varchar(50),DateReported varchar(50),CurrentBalance float,ActualPaymentAmt float,DateofLastPayment2 datetime) insert into @tempTable SELECT distinct LN.LOANNO,(SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,BDS.REALISATIONDATE,103)-2,103),'','') FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment,ISNULL((SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,LCDDATE,103)-2,103),'','') FROM LOANCLOSUREDETAILS WHERE LNID = LN.LNID),'') DateClosed,REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,GETDATE(),103),103),'','') DateReported,(select top(1) lsd.LOANBALANCE from LOANSCHEDULE ls join LOANSCHEDULEDETAILS lsd on ls.LSID=lsd.LSID where LNID=LN.LNID and ls.STATUS=0 and lsd.EMISTATUS=0 order by lsd.LOANBALANCE desc) CurrentBalance ,(SELECT top(1) BDS.AMOUNT FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.            LNID ORDER BY BDS.REALISATIONDATE DESC) ActualPaymentAmt,(SELECT TOP 1 CONVERT(DATETIME,BDS.REALISATIONDATE-2,103)FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment FROM LOANS LN,LEDGER LED,LEDGERADDRESS LADD WHERE LN.ACTIVE IN (2,0,1,3) AND LN.LEDID = LED.LEDID AND LED.LEDID = LADD.LEDID AND LN.DISBURSEMENTSTATUS =1 And LN.LOANNO=@loanNo  select *, DATEDIFF(day,t1.DateofLastPayment2 ,  GETDATE()) No_of_days_past_due from @tempTable T1", cs1);
+            SqlCommand SqlCmd = new SqlCommand("declare @tempTable as table (LOANNO varchar(50),DateofLastPayment varchar(50),DateClosed varchar(50),DateReported varchar(50),CurrentBalance float,ActualPaymentAmt float,DateofLastPayment2 datetime,Active int)  insert into @tempTable SELECT distinct LN.LOANNO,(SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,BDS.REALISATIONDATE,103)-2,103),'','') FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment,ISNULL((SELECT TOP 1 REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,LCDDATE,103)-2,103),'','') FROM LOANCLOSUREDETAILS WHERE LNID = LN.LNID),'') DateClosed,REPLACE(CONVERT(VARCHAR(10),CONVERT(DATETIME,GETDATE(),103),103),'','') DateReported,isnull((select top(1) case when ln.ACTIVE=1 then 0  else lsd.LOANBALANCE end as LOANBALANCE from LOANSCHEDULE ls join LOANSCHEDULEDETAILS lsd on ls.LSID=lsd.LSID where LNID=LN.LNID and ls.STATUS=0 and lsd.EMISTATUS=0 order by lsd.LOANBALANCE desc),0) CurrentBalance ,(SELECT top(1) BDS.AMOUNT FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.            LNID ORDER BY BDS.REALISATIONDATE DESC) ActualPaymentAmt,(SELECT TOP 1 CONVERT(DATETIME,BDS.REALISATIONDATE-2,103)FROM BANKDEPOSITSLIPDETAILS BDS WHERE BDS.LNID = LN.LNID ORDER BY BDS.REALISATIONDATE DESC) DateofLastPayment,Ln.Active FROM LOANS LN,LEDGER LED,LEDGERADDRESS LADD WHERE LN.ACTIVE IN (2,0,1,3) AND LN.LEDID = LED.LEDID AND LED.LEDID = LADD.LEDID AND LN.DISBURSEMENTSTATUS =1 And LN.LOANNO=@loanNo  select *, DATEDIFF(day,t1.DateofLastPayment2 ,  GETDATE()) No_of_days_past_due from @tempTable T1", cs1);
             SqlCmd.Parameters.Add("@loanNo", SqlDbType.VarChar).Value = loanNo;
             da = new SqlDataAdapter(SqlCmd);
             ds = new DataSet();
